@@ -4,7 +4,13 @@ function createInvoice() {
     const mobileNo = document.getElementById('mobileNo').value;
     const eWalletSelected = document.getElementById('selectedEwallet');
     const selectedValue = eWalletSelected.value;
-    if(selectedValue != ""){
+    if(amount == ""){
+        alert('Please input amount for the payment.');
+    }
+    else if(selectedValue == ""){
+        alert('Please select an eWallet for the payment.');
+    }
+    else{
         const data = { amount, mobileNo, selectedValue };
         fetch('https://apsc-monitoring-webpage.onrender.com/create-invoice', {
         method: 'POST',
@@ -24,8 +30,5 @@ function createInvoice() {
             console.error('Error creating invoice:', error);
             alert('Error creating invoice. Please try again.');
         });
-    }
-    else{
-        alert('Please select an eWallet for the payment.');
     }
 }
