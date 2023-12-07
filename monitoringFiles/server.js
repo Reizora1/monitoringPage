@@ -19,14 +19,16 @@ app.post('/create-invoice', async (req, res) => {
     const apiKey = 'xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs';
     const amount = req.body.amount;
     const mobileNo = req.body.mobileNo;
-    
+    const eWallet = req.body.selectedValue;
+    console.log(eWallet);
+
     const payload = {
         "external_id": "123TEST",
         "amount": amount,
         "description": "Invoice Demo #123",
         "invoice_duration": 300,
         "currency": "PHP",
-        "payment_methods": ["GCASH", "PAYMAYA"],
+        "payment_methods": [eWallet],
         "customer": {
             "mobile_number": mobileNo
         },
@@ -40,8 +42,8 @@ app.post('/create-invoice', async (req, res) => {
             },
             body: JSON.stringify(payload),
         });
-
         const result = await response.json();
+        console.log(result);
         res.json(result);
     } catch (error) {
         console.error('Error creating invoice:', error);
