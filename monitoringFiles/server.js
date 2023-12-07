@@ -26,6 +26,7 @@ app.post('/create-invoice', async (req, res) => {
         "description": "Invoice Demo #123",
         "invoice_duration": 300,
         "currency": "PHP",
+        "payment_methods": ["GCASH", "PAYMAYA"],
         "customer": {
             "mobile_number": mobileNo
         },
