@@ -6,7 +6,7 @@ function createInvoice() {
     const selectedValue = eWalletSelected.value;
     const data = { amount, mobileNo, selectedValue };
 
-    fetch('http://localhost:3000/create-invoice', {
+    fetch('https://apsc-monitoring-webpage.onrender.com/create-invoice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
