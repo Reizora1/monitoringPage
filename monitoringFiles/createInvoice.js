@@ -2,9 +2,11 @@
 function createInvoice() {
     const amount = document.getElementById('amount').value;
     const mobileNo = document.getElementById('mobileNo').value;
-    const data = { amount, mobileNo };
+    const eWalletSelected = document.getElementById('selectedEwallet');
+    const selectedValue = eWalletSelected.value;
+    const data = { amount, mobileNo, selectedValue };
 
-    fetch('https://apsc-monitoring-webpage.onrender.com/create-invoice', {
+    fetch('http://localhost:3000/create-invoice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
