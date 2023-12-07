@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+    <link rel="stylesheet" href="mainPageStyles.css">
+</head>
+<body>
+    <button onclick="logout()" id="logoutButton" >Logout</button>
+    <div class="container" id="authenticatedContent" style="display: none;">
+        <h1>APSC Services Monitoring Web Page</h1>
+        <h4>Input your Machine ID & click the button to view data.</h4>
+        <input type="text" id="rootNodeInput" placeholder="Enter MachineID">  
+        <button id="toggleButton" onclick="toggleView()">View Machine Data</button>
+        <h4 id="textView"></h4>
+        <h5 id="textView2"></h5>
+        <div id="dataContainer"></div>
+    </div>
+
+    <script type="module" src="mainPageScript.js"></script>
+</body>
+</html>

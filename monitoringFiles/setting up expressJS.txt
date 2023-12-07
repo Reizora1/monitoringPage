@@ -1,0 +1,61 @@
+To host your HTML and CSS files using Node.js, you can use a simple web server. Here's a basic step-by-step guide:
+
+Create Project Directory:
+Create a directory for your project and move your HTML and CSS files into it.
+
+Install Node.js:
+Make sure you have Node.js installed on your machine. You can download it from Node.js official website.
+
+Create a Package.json File:
+In your project directory, create a package.json file. You can do this by running the following command in your terminal:
+
+bash
+Copy code
+npm init -y
+This will create a basic package.json file.
+
+Install Express:
+Express is a minimal and flexible Node.js web application framework. Install it using the following command:
+
+bash
+Copy code
+npm install express
+Create Server File:
+Create a file (e.g., server.js) in your project directory to write your server code. Here's a simple example using Express:
+
+javascript
+Copy code
+const express = require('express');
+const path = require('path');
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Set up a route to serve your HTML file
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+Replace 'public', 'index.html', and 'style.css' with the actual names of your directory and files.
+
+Run the Server:
+In your terminal, run the following command:
+
+bash
+Copy code
+node server.js
+This will start your server, and you can access your files at http://localhost:3000 in your web browser.
+
+Deploy to a Web Hosting Service:
+To deploy your application to a web hosting service, you can use platforms like Heroku, Netlify, or Vercel. Each of these services has its own deployment process, but they generally involve creating an account, linking your code repository, and following their deployment instructions.
+
+For example, if you choose Heroku, you can follow their Getting Started guide for Node.js applications.
+
+Remember to adjust the code according to your project structure and file names. Additionally, configure your web hosting service according to its specific requirements for deploying Node.js applications.

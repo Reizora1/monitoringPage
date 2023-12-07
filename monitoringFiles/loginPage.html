@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="loginPageStyles.css" type="text/css">
+  <title>Log In | APSC Services</title>
+</head>
+
+<body>
+  <h1>WELCOME TO ASPC SERVICES MONITORING PAGE</h1>
+  <div class="wrapper">
+    <div class="card-switch">
+      <label class="switch">
+        <input type="checkbox" class="toggle">
+        <span class="slider"></span>
+        <span class="card-side"></span>
+        <div class="flip-card__inner">
+          <div class="flip-card__front">
+            <div class="title">LOGIN</div>
+            <form class="flip-card__form" action="">
+              <input class="flip-card__input" name="email" id="login_email" placeholder="Email" type="email" required>
+              <input class="flip-card__input" name="password" id="login_password" placeholder="Password" type="password" required>
+              <button type="button" class="flip-card__btn" id="login" name="login">Log In</button>
+              <!-- Forgot Password link -->
+              <a href="#" id="forgotPasswordLink" class="forgot-password-link">Forgot Password</a>
+            </form>
+          </div>
+          <div class="flip-card__back">
+            <div class="title">SIGN-UP</div>
+            <form class="flip-card__form" action="">
+              <input class="flip-card__input" name="email" id="email" placeholder="Email" type="email" required>
+              <input class="flip-card__input" name="password" id="password" placeholder="Password" type="password" required>
+              <input class="flip-card__input" name="confirmPass" id="confirmPass" placeholder="Confirm Password" type="password" required>
+              <button class="flip-card__btn" name="register" id="register" type="button">Register</button>
+            </form>
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <!-- Reset Password Pop-up -->
+  <div id="resetPasswordPopup" class="popup">
+    <span class="close" id="closeButton">&times;</span>
+    <div class="title">Reset Password</div>
+    <form class="flip-card__form" id="resetPasswordForm">
+      <input class="flip-card__input" name="resetEmail" id="resetEmail" placeholder="Enter your email" type="email" required>
+      <button class="flip-card__btn" type="button" id="resetPasswordBtn">Reset</button>
+    </form>
+  </div>
+  
+  <!-- Reference the external JavaScript file -->
+  <script type="module" src="loginScript.js"></script>
+</body>
+</html>
