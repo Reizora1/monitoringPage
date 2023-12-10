@@ -82,8 +82,6 @@ app.get('/loginPage', (req, res) => {
         const jsContent = fs.readFileSync(jsPath, 'utf8');
         // Combine HTML and CSS and send the response
         res.send(`
-            <style>${cssContent}</style>
-            <script type="module">${jsContent}</script>
             ${htmlContent}
         `);
     } else {
@@ -103,8 +101,6 @@ app.get('/mainPage', (req, res) => {
         const jsContent = fs.readFileSync(jsPath, 'utf8');
         // Combine HTML and CSS and send the response
         res.send(`
-            <style>${cssContent}</style>
-            <script type="module">${jsContent}</script>
             ${htmlContent}
         `);
     } else {
@@ -124,7 +120,6 @@ app.get('/paymentPage', (req, res) => {
         const jsContent = fs.readFileSync(jsPath, 'utf8');
         // Combine HTML and CSS and send the response
         res.send(`
-            <script type="module">${jsContent}</script>
             ${htmlContent}
         `);
     } else {
