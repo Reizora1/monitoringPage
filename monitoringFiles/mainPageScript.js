@@ -89,7 +89,13 @@ function displayData(data, container) {
     const table = document.createElement('table');
     const tbody = document.createElement('tbody');
 
-    for (const key in data) {
+    // Get keys from data object
+    const keys = Object.keys(data).sort((a, b) => a - b);
+
+    // Latest 5 entries
+    const latestKeys = keys.slice(-5); // Select the last 5 keys
+
+    for (const key of latestKeys) {
         const row = document.createElement('tr');
 
         const keyCell = document.createElement('td');
@@ -97,15 +103,18 @@ function displayData(data, container) {
         row.appendChild(keyCell);
 
         const valueCell = document.createElement('td');
-        if (typeof data[key] === 'object') {
-            displayData(data[key], valueCell);
-        } else {
-            valueCell.textContent = data[key];
-        }
-        row.appendChild(valueCell);
+        const value = data[key];
 
+        if (typeof value === 'object') {
+            displayData(value, valueCell);
+        } else {
+            valueCell.textContent = value;
+        }
+
+        row.appendChild(valueCell);
         tbody.appendChild(row);
     }
+
     table.appendChild(tbody);
     container.innerHTML = '';
     container.appendChild(table);
