@@ -63,8 +63,6 @@ app.get('/', (req, res) => {
         const jsContent = fs.readFileSync(jsPath, 'utf8');
         // Combine HTML and CSS and send the response
         res.send(`
-            <style>${cssContent}</style>
-            <script type="module">${jsContent}</script>
             ${htmlContent}
         `);
     } else {
