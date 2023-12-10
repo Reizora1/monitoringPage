@@ -7,6 +7,9 @@ function createInvoice() {
     if(amount == ""){
         alert('Please input amount for the payment.');
     }
+    else if(amount < "10"){
+        alert('Please input the minimum amount required for the transaction.');
+    }
     else if(selectedValue == ""){
         alert('Please select an eWallet for the payment.');
     }
