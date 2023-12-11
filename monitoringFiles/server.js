@@ -8,7 +8,6 @@ const fetch = require('node-fetch');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname), { 'extensions': ['css'], 'index': false }));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,7 +50,7 @@ app.post('/create-invoice', async (req, res) => {
     }
 });
 
-// Set up a route to serve your HTML file and its associated CSS
+// Monitoring page endpoints.
 app.get('/', (req, res) => {
     const htmlPath = path.join(__dirname,'loginPage.html');
     const cssPath = path.join(__dirname, 'loginPageStyles.css');
@@ -61,12 +60,10 @@ app.get('/', (req, res) => {
         const cssContent = fs.readFileSync(cssPath, 'utf8');
         const htmlContent = fs.readFileSync(htmlPath, 'utf8');
         const jsContent = fs.readFileSync(jsPath, 'utf8');
-        // Combine HTML and CSS and send the response
         res.send(`
             ${htmlContent}
         `);
     } else {
-        // Return a 404 error if either file is not found
         res.status(404).send('404 Not Found');
     }
 });
@@ -80,12 +77,10 @@ app.get('/loginPage', (req, res) => {
         const cssContent = fs.readFileSync(cssPath, 'utf8');
         const htmlContent = fs.readFileSync(htmlPath, 'utf8');
         const jsContent = fs.readFileSync(jsPath, 'utf8');
-        // Combine HTML and CSS and send the response
         res.send(`
             ${htmlContent}
         `);
     } else {
-        // Return a 404 error if either file is not found
         res.status(404).send('404 Not Found');
     }
 });
@@ -99,12 +94,10 @@ app.get('/mainPage', (req, res) => {
         const cssContent = fs.readFileSync(cssPath, 'utf8');
         const htmlContent = fs.readFileSync(htmlPath, 'utf8');
         const jsContent = fs.readFileSync(jsPath, 'utf8');
-        // Combine HTML and CSS and send the response
         res.send(`
             ${htmlContent}
         `);
     } else {
-        // Return a 404 error if either file is not found
         res.status(404).send('404 Not Found');
     }
 });
@@ -118,17 +111,14 @@ app.get('/paymentPage', (req, res) => {
         //const cssContent = fs.readFileSync(cssPath, 'utf8');
         const htmlContent = fs.readFileSync(htmlPath, 'utf8');
         const jsContent = fs.readFileSync(jsPath, 'utf8');
-        // Combine HTML and CSS and send the response
         res.send(`
             ${htmlContent}
         `);
     } else {
-        // Return a 404 error if either file is not found
         res.status(404).send('404 Not Found');
     }
 });
 
-// Function to check if a file exists
 function fileExists(filePath) {
     try {
         return fs.statSync(filePath).isFile();
