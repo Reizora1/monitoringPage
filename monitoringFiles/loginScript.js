@@ -1,7 +1,7 @@
-// Import the functions you need from the SDKs you need
+// Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-// Your web app's Firebase configuration
+// Firebase SDK
 const firebaseConfig = {
   apiKey: "AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8",
   authDomain: "apsc-database.firebaseapp.com",
@@ -10,7 +10,7 @@ const firebaseConfig = {
   messagingSenderId: "848325536482",
   appId: "1:848325536482:web:efe7c6b0cd442eff6c0cbb"
 };
-// Initialize Firebase
+// Firebase initialization
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 console.log(firebaseApp);
@@ -28,7 +28,7 @@ function closeResetPasswordPopup() {
   resetPasswordPopup.style.display = "none";
   console.log("Reset Password window closed.");
 }
-// Event delegation for the close button
+// For close button in resetPass popup
 document.body.addEventListener('click', function(event) {
   if (event.target.classList.contains('close')) {
     closeResetPasswordPopup();
@@ -89,7 +89,7 @@ signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    // Redirect to another HTML page after successful login
+    // Redirect to mainPage HTML page after successful login
     window.location.href = "mainPage";
   })
   .catch((error) => {
