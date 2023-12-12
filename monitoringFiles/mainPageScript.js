@@ -57,7 +57,7 @@ window.viewMachineInfo = function() {
 
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
-        displayData(data, dataContainer);
+        displayMachineData(data, dataContainer);
     });
     console.log(rootNode);
 };
@@ -70,7 +70,7 @@ window.viewTransactionHistory = function() {
 
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
-        displayData(data, dataContainer);
+        displayTransactionData(data, dataContainer);
     });
     console.log(rootNode);
 };
@@ -85,23 +85,72 @@ window.logout = function() {
         });
 };
 
-function displayData(data, container) {
+function displayMachineData(data, container) {
     const table = document.createElement('table');
     const tbody = document.createElement('tbody');
 
-    for (const key in data) {
-        const row = document.createElement('tr');
-        const keyCell = document.createElement('td');
-        keyCell.textContent = key;
-        row.appendChild(keyCell);
+    if(data && typeof data === 'object') {
+        for (const key in data) {
+            const row = document.createElement('tr');
+            const keyCell = document.createElement('td');
+            keyCell.textContent = key;
+            row.appendChild(keyCell);
 
-        const valueCell = document.createElement('td');
-        if (typeof data[key] === 'object') {
-            displayData(data[key], valueCell);
-        } else {
-            valueCell.textContent = data[key];
+            const valueCell = document.createElement('td');
+            if (typeof data[key] === 'object') {
+                displayMachineData(data[key], valueCell);
+            } else {
+                valueCell.textContent = data[key];
+            }
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
         }
-        row.appendChild(valueCell);
+        table.appendChild(tbody);
+        container.innerHTML = '';
+        container.appendChild(table);
+    }
+    else {
+        const row = document.createElement('tr');
+        const errorCell = document.createElement('td');
+        errorCell.textContent = 'Error: Invalid MachineID';
+        row.appendChild(errorCell);
+        tbody.appendChild(row);
+    }
+}
+
+function displayTransactionData(data, container) {
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+
+    if (data && typeof data === 'object') {
+        const keys = Object.keys(data).sort((a, b) => b - a);
+        const latestKeys = keys.slice(-5).reverse();
+
+        for (const key of latestKeys) {
+            const row = document.createElement('tr');
+
+            const keyCell = document.createElement('td');
+            keyCell.textContent = key;
+            row.appendChild(keyCell);
+
+            const valueCell = document.createElement('td');
+            const value = data[key];
+
+            if (typeof value === 'object') {
+                displayTransactionData(value, valueCell);
+            } else {
+                valueCell.textContent = value;
+            }
+
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
+        }
+    }
+    else {
+        const row = document.createElement('tr');
+        const errorCell = document.createElement('td');
+        errorCell.textContent = 'Error: Invalid MachineID';
+        row.appendChild(errorCell);
         tbody.appendChild(row);
     }
     table.appendChild(tbody);
