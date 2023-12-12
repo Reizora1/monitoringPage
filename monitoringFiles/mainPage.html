@@ -10,12 +10,21 @@
     <button onclick="logout()" id="logoutButton" >Logout</button>
     <div class="container" id="authenticatedContent" style="display: none;">
         <h1>APSC Services Monitoring Web Page</h1>
-        <h4>Input your Machine ID & click the button to view data.</h4>
+        <h4>Input your Machine ID to view data or search a transaction history.</h4>
         <input type="text" id="rootNodeInput" placeholder="Enter MachineID">  
         <button id="toggleButton" onclick="toggleView()">View Machine Data</button>
+        <button id="searchIDLink" class="searchBtn1">Search Transaction</button>
         <h4 id="textView"></h4>
         <h5 id="textView2"></h5>
         <div id="dataContainer"></div>
+    </div>
+    <div id="searchPopup" class="popup">
+        <span class="close" id="closeButton">&times;</span>
+        <div class="title">Search a transaction.</div>
+        <form id="searchForm">
+            <input name="searchID" id="transactionID" placeholder="Enter transactionID" type="text" required>
+            <button type="button" id="searchBtn">Search</button>
+        </form>
     </div>
 
     <script type="module" src="mainPageScript.js"></script>
