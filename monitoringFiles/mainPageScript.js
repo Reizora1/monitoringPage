@@ -25,28 +25,67 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+// TO OPTIMIZE #4
+const searchLink = document.getElementById("searchIDLink");
+const searchPopup = document.getElementById("searchPopup");
+const rootNodeInput = document.getElementById('rootNodeInput');
+const searchBtn = document.getElementById("searchBtn");
+
+// Search button functionality - TO OPTIMIZE #3
+searchLink.addEventListener("click", function () {
+    if(rootNodeInput.value.trim() == "") {
+        alert('Please enter a MachineID first!');
+    }
+    else {
+        searchPopup.style.display = "block";
+    }
+});
+
+// TO OPTIMIZE #2
+function closesearchPopup() {
+    searchPopup.style.display = "none";
+}
+// For close button in resetPass popup
+document.body.addEventListener('click', function(event) {
+if (event.target.classList.contains('close')) {
+    closesearchPopup();
+}
+});
+window.addEventListener("click", function (event) {
+    if (event.target == searchPopup) {
+        closesearchPopup();
+    }
+});
+searchBtn.addEventListener("click", function () {
+    searchTransactionHistory();
+    closesearchPopup();
+});
+
 let isTransactionHistoryView = false;
 
 window.toggleView = function() {
-const button = document.getElementById('toggleButton');
-const txtView = document.getElementById('textView');
-const txtView2 = document.getElementById('textView2');
-const dataContainer = document.getElementById('dataContainer');
+    const button = document.getElementById('toggleButton');
+    const txtView = document.getElementById('textView');
+    const txtView2 = document.getElementById('textView2');
 
-if (isTransactionHistoryView) {
-    button.textContent = 'View Machine Data';
-    txtView.textContent = 'TRANSACTION HISTORY';
-    txtView2.textContent = 'TYPE ============= TRANSACTION ID ======================= TRANSACTION DETAILS';
-    viewTransactionHistory();
-    console.log("Viewing Transaction History.");
-} else {
-    button.textContent = 'View Transaction History';
-    txtView.textContent = 'MACHINE DATA';
-    txtView2.textContent = 'PARAMETERS ========================================================== VALUE';
-    viewMachineInfo();
-    console.log("Viewing Machine Data.");
-}
-isTransactionHistoryView = !isTransactionHistoryView;
+    if (isTransactionHistoryView) {
+        button.textContent = 'View Machine Data';
+        txtView.textContent = 'TRANSACTION HISTORY';
+        //txtView2.textContent = 'TYPE ============= TRANSACTION ID ======================= TRANSACTION DETAILS';
+        viewTransactionHistory();
+        searchLink.style.display = "block";
+        console.log("Viewing Transaction History.");
+    }
+    else {
+        button.textContent = 'View Transaction History';
+        txtView.textContent = 'MACHINE DATA';
+        //txtView2.textContent = 'PARAMETERS ========================================================== VALUE';
+        viewMachineInfo();
+        console.log("Viewing Machine Data.");
+        searchLink.style.display = "none";
+    }
+    
+    isTransactionHistoryView = !isTransactionHistoryView;
 };
 
 window.viewMachineInfo = function() {
@@ -73,6 +112,24 @@ window.viewTransactionHistory = function() {
         displayTransactionData(data, dataContainer);
     });
     console.log(rootNode);
+};
+
+// TO OPTIMIZE
+window.searchTransactionHistory = function() { 
+    const dataContainer = document.getElementById('dataContainer');
+    const rootNodeInput = document.getElementById('rootNodeInput').value.trim();
+    const transactionID = document.getElementById('transactionID').value.trim();
+    const databaseRef = ref(database, `${rootNodeInput}/transactionHistory/eWallet/"${transactionID}"`);
+    
+    if(transactionID == "") {
+        alert('Enter transactionID to search.');
+    }
+    else {
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            displayMachineData(data, dataContainer);
+        });
+    }
 };
 
 window.logout = function() {
