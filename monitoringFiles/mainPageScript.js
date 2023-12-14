@@ -26,6 +26,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // TO OPTIMIZE #4
+const displayTransactBtn = document.getElementById("displayTransaction");
 const searchLink = document.getElementById("searchIDLink");
 const searchPopup = document.getElementById("searchPopup");
 const rootNodeInput = document.getElementById('rootNodeInput');
@@ -62,30 +63,51 @@ searchBtn.addEventListener("click", function () {
 });
 
 let isTransactionHistoryView = false;
-
 window.toggleView = function() {
     const button = document.getElementById('toggleButton');
     const txtView = document.getElementById('textView');
-    const txtView2 = document.getElementById('textView2');
+    const txtView1 = document.getElementById('textView1');
 
     if (isTransactionHistoryView) {
         button.textContent = 'View Machine Data';
         txtView.textContent = 'TRANSACTION HISTORY';
-        //txtView2.textContent = 'TYPE ============= TRANSACTION ID ======================= TRANSACTION DETAILS';
         viewTransactionHistory();
         searchLink.style.display = "block";
+        displayTransactBtn.style.display = "block";
         console.log("Viewing Transaction History.");
     }
     else {
         button.textContent = 'View Transaction History';
         txtView.textContent = 'MACHINE DATA';
-        //txtView2.textContent = 'PARAMETERS ========================================================== VALUE';
         viewMachineInfo();
-        console.log("Viewing Machine Data.");
         searchLink.style.display = "none";
+        displayTransactBtn.style.display = "none";
+        txtView1.style.display = "none";
+        console.log("Viewing Machine Data.");
     }
     
     isTransactionHistoryView = !isTransactionHistoryView;
+};
+
+let isDisplayEwallet = false;
+window.displayTransactHistory = function() {
+    const button = document.getElementById('displayTransaction');
+    const txtView1 = document.getElementById('textView1');
+    txtView1.style.display = "block";
+
+    if (isDisplayEwallet) {
+        button.textContent = 'Display Coins';
+        txtView1.textContent = "EWALLET TRANSACTIONS";
+        viewTransactionHistoryEwallet();
+        console.log("Viewing E-Wallet History.");
+    }
+    else {
+        button.textContent = 'Display E-Wallet';
+        txtView1.textContent = "COIN TRANSACTIONS";
+        viewTransactionHistoryCoins();
+        console.log("Viewing Coins History.");
+    }
+    isDisplayEwallet = !isDisplayEwallet;
 };
 
 window.viewMachineInfo = function() {
@@ -96,6 +118,7 @@ window.viewMachineInfo = function() {
 
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
+        console.log(data);
         displayMachineData(data, dataContainer);
     });
     console.log(rootNode);
@@ -114,12 +137,39 @@ window.viewTransactionHistory = function() {
     console.log(rootNode);
 };
 
+window.viewTransactionHistoryEwallet = function() {
+    const dataContainer = document.getElementById('dataContainer');
+    const rootNodeInput = document.getElementById('rootNodeInput');
+    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
+    const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet`);
+
+    onValue(databaseRef, (snapshot) => {
+        const data = snapshot.val();
+        displayTransactionData(data, dataContainer);
+    });
+};
+
+window.viewTransactionHistoryCoins = function() {
+    const dataContainer = document.getElementById('dataContainer');
+    const rootNodeInput = document.getElementById('rootNodeInput');
+    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
+    const databaseRef = ref(database, `${rootNode}/transactionHistory/coins`);
+
+    onValue(databaseRef, (snapshot) => {
+        const data = snapshot.val();
+        displayTransactionData(data, dataContainer);
+    });
+};
+
 // TO OPTIMIZE
 window.searchTransactionHistory = function() { 
     const dataContainer = document.getElementById('dataContainer');
     const rootNodeInput = document.getElementById('rootNodeInput').value.trim();
     const transactionID = document.getElementById('transactionID').value.trim();
+    const txtView1 = document.getElementById('textView1');
     const databaseRef = ref(database, `${rootNodeInput}/transactionHistory/eWallet/"${transactionID}"`);
+    txtView1.textContent = `Transaction ID: ${transactionID}`;
+    txtView1.style.display = "block";
     
     if(transactionID == "") {
         alert('Enter transactionID to search.');
