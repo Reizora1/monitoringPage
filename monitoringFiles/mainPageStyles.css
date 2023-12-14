@@ -23,12 +23,15 @@ h1 {
   color: #333;
 }
 
-h4 {
+h2 {
   color: #333;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin: 0;
 }
 
-h5 {
-  margin: 0;
+h4 {
+  color: #333;
 }
 
 #rootNodeInput {
@@ -133,7 +136,7 @@ th {
   border-radius: 5px;
   cursor: pointer;
 }
-.searchBtn1 {
+.displayTransactionBtn {
   display: none;
   padding: 10px;
   margin: 0 auto;
