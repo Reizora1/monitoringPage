@@ -48,9 +48,9 @@ function closesearchPopup() {
 }
 // For close button in resetPass popup
 document.body.addEventListener('click', function(event) {
-if (event.target.classList.contains('close')) {
-    closesearchPopup();
-}
+    if (event.target.classList.contains('close')) {
+        closesearchPopup();
+    }
 });
 window.addEventListener("click", function (event) {
     if (event.target == searchPopup) {
@@ -118,7 +118,6 @@ window.viewMachineInfo = function() {
 
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
-        console.log(data);
         displayMachineData(data, dataContainer);
     });
     console.log(rootNode);
@@ -166,10 +165,10 @@ window.searchTransactionHistory = function() {
     const dataContainer = document.getElementById('dataContainer');
     const rootNodeInput = document.getElementById('rootNodeInput').value.trim();
     const transactionID = document.getElementById('transactionID').value.trim();
+
     const txtView1 = document.getElementById('textView1');
     const databaseRef = ref(database, `${rootNodeInput}/transactionHistory/eWallet/"${transactionID}"`);
     txtView1.textContent = `Transaction ID: ${transactionID}`;
-    txtView1.style.display = "block";
     
     if(transactionID == "") {
         alert('Enter transactionID to search.');
@@ -177,7 +176,15 @@ window.searchTransactionHistory = function() {
     else {
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
-            displayMachineData(data, dataContainer);
+            if(data != null) {
+                displayMachineData(data, dataContainer);
+                txtView1.style.display = "block";
+            }
+            else {
+                alert("Invalid transactionID!");
+                dataContainer.textContent = "INVALID TRANSACTION ID!";
+                txtView1.style.display = "none";
+            }
         });
     }
 };
