@@ -56,9 +56,9 @@ resetPasswordBtn.addEventListener("click", function () {
 
 // New Registration code start	  
 document.getElementById("register").addEventListener("click", function() {
-var email = document.getElementById("email").value;
-var password = document.getElementById("password").value;
-var confirmPass = document.getElementById("confirmPass").value;
+let email = document.getElementById("email").value;
+let password = document.getElementById("password").value;
+let confirmPass = document.getElementById("confirmPass").value;
   if(password == confirmPass){
     // For new registration
     createUserWithEmailAndPassword(auth, email, password)
@@ -82,8 +82,8 @@ var confirmPass = document.getElementById("confirmPass").value;
 
 // Login code start	  
 document.getElementById("login").addEventListener("click", function() {
-var email = document.getElementById("login_email").value;
-var password = document.getElementById("login_password").value;
+let email = document.getElementById("login_email").value;
+let password = document.getElementById("login_password").value;
 // For signin
 signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
