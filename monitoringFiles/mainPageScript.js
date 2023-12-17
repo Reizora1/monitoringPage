@@ -41,8 +41,7 @@ searchLink.addEventListener("click", function () {
         searchPopup.style.display = "block";
     }
 });
-
-// TO OPTIMIZE #2
+// search transactionID popUp
 function closesearchPopup() {
     searchPopup.style.display = "none";
 }
@@ -68,7 +67,11 @@ window.toggleView = function() {
     const txtView = document.getElementById('textView');
     const txtView1 = document.getElementById('textView1');
 
-    if (isTransactionHistoryView) {
+    if (rootNodeInput.value.trim() == "") {
+        alert("Please enter a machineID!");
+        return;
+    }
+    else if (isTransactionHistoryView) {
         button.textContent = 'View Machine Data';
         txtView.textContent = 'TRANSACTION HISTORY';
         viewTransactionHistory();
@@ -95,7 +98,11 @@ window.displayTransactHistory = function() {
     const txtView1 = document.getElementById('textView1');
     txtView1.style.display = "block";
 
-    if (isDisplayEwallet) {
+    if (rootNodeInput.value.trim() == "") {
+        alert("Please enter a machineID!");
+        return;
+    }
+    else if (isDisplayEwallet) {
         button.textContent = 'Display Coins';
         txtView1.textContent = "EWALLET TRANSACTIONS";
         viewTransactionHistoryEwallet();
@@ -114,7 +121,7 @@ window.viewMachineInfo = function() {
     const dataContainer = document.getElementById('dataContainer');
     const rootNodeInput = document.getElementById('rootNodeInput');
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
-    const databaseRef = ref(database, rootNode + '/Machine Information');
+    const databaseRef = ref(database, `${rootNode}/Machine Information`);
 
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
@@ -127,7 +134,7 @@ window.viewTransactionHistory = function() {
     const dataContainer = document.getElementById('dataContainer');
     const rootNodeInput = document.getElementById('rootNodeInput');
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
-    const databaseRef = ref(database, rootNode + '/transactionHistory');
+    const databaseRef = ref(database, `${rootNode}/transactionHistory`);
 
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
@@ -165,9 +172,8 @@ window.searchTransactionHistory = function() {
     const dataContainer = document.getElementById('dataContainer');
     const rootNodeInput = document.getElementById('rootNodeInput').value.trim();
     const transactionID = document.getElementById('transactionID').value.trim();
-
-    const txtView1 = document.getElementById('textView1');
     const databaseRef = ref(database, `${rootNodeInput}/transactionHistory/eWallet/"${transactionID}"`);
+    const txtView1 = document.getElementById('textView1');
     txtView1.textContent = `Transaction ID: ${transactionID}`;
     
     if(transactionID == "") {
@@ -176,6 +182,7 @@ window.searchTransactionHistory = function() {
     else {
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
+            console.log(data);
             if(data != null) {
                 displayMachineData(data, dataContainer);
                 txtView1.style.display = "block";
