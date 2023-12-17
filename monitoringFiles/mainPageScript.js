@@ -31,11 +31,16 @@ const searchLink = document.getElementById("searchIDLink");
 const searchPopup = document.getElementById("searchPopup");
 const rootNodeInput = document.getElementById('rootNodeInput');
 const searchBtn = document.getElementById("searchBtn");
+const dataContainer = document.getElementById('dataContainer');
+const txtView = document.getElementById('textView');
+const txtView1 = document.getElementById('textView1');
 
 // Search button functionality - TO OPTIMIZE #3
 searchLink.addEventListener("click", function () {
     if(rootNodeInput.value.trim() == "") {
         alert('Please enter a MachineID first!');
+        dataContainer.style.display = "none";
+        txtView1.style.display = "none";
     }
     else {
         searchPopup.style.display = "block";
@@ -58,17 +63,18 @@ window.addEventListener("click", function (event) {
 });
 searchBtn.addEventListener("click", function () {
     searchTransactionHistory();
+    dataContainer.style.display = "block";
     closesearchPopup();
 });
 
 let isTransactionHistoryView = false;
 window.toggleView = function() {
     const button = document.getElementById('toggleButton');
-    const txtView = document.getElementById('textView');
-    const txtView1 = document.getElementById('textView1');
 
     if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
+        dataContainer.style.display = "none";
+        txtView1.style.display = "none";
         return;
     }
     else if (isTransactionHistoryView) {
@@ -77,6 +83,7 @@ window.toggleView = function() {
         viewTransactionHistory();
         searchLink.style.display = "block";
         displayTransactBtn.style.display = "block";
+        dataContainer.style.display = "block";
         console.log("Viewing Transaction History.");
     }
     else {
@@ -86,6 +93,7 @@ window.toggleView = function() {
         searchLink.style.display = "none";
         displayTransactBtn.style.display = "none";
         txtView1.style.display = "none";
+        dataContainer.style.display = "block";
         console.log("Viewing Machine Data.");
     }
     
@@ -93,23 +101,27 @@ window.toggleView = function() {
 };
 
 let isDisplayEwallet = false;
-window.displayTransactHistory = function() {
+window.toggleCoinEwalletHistory = function() {
     const button = document.getElementById('displayTransaction');
-    const txtView1 = document.getElementById('textView1');
-    txtView1.style.display = "block";
 
     if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
+        dataContainer.style.display = "none";
+        txtView1.style.display = "none";
         return;
     }
     else if (isDisplayEwallet) {
         button.textContent = 'Display Coins';
+        txtView1.style.display = "block";
+        dataContainer.style.display = "block";
         txtView1.textContent = "EWALLET TRANSACTIONS";
         viewTransactionHistoryEwallet();
         console.log("Viewing E-Wallet History.");
     }
     else {
         button.textContent = 'Display E-Wallet';
+        txtView1.style.display = "block";
+        dataContainer.style.display = "block";
         txtView1.textContent = "COIN TRANSACTIONS";
         viewTransactionHistoryCoins();
         console.log("Viewing Coins History.");
@@ -118,8 +130,6 @@ window.displayTransactHistory = function() {
 };
 
 window.viewMachineInfo = function() {
-    const dataContainer = document.getElementById('dataContainer');
-    const rootNodeInput = document.getElementById('rootNodeInput');
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/Machine Information`);
 
@@ -131,8 +141,6 @@ window.viewMachineInfo = function() {
 };
 
 window.viewTransactionHistory = function() {
-    const dataContainer = document.getElementById('dataContainer');
-    const rootNodeInput = document.getElementById('rootNodeInput');
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/transactionHistory`);
 
@@ -144,8 +152,6 @@ window.viewTransactionHistory = function() {
 };
 
 window.viewTransactionHistoryEwallet = function() {
-    const dataContainer = document.getElementById('dataContainer');
-    const rootNodeInput = document.getElementById('rootNodeInput');
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet`);
 
@@ -156,8 +162,6 @@ window.viewTransactionHistoryEwallet = function() {
 };
 
 window.viewTransactionHistoryCoins = function() {
-    const dataContainer = document.getElementById('dataContainer');
-    const rootNodeInput = document.getElementById('rootNodeInput');
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/transactionHistory/coins`);
 
@@ -169,11 +173,9 @@ window.viewTransactionHistoryCoins = function() {
 
 // TO OPTIMIZE
 window.searchTransactionHistory = function() { 
-    const dataContainer = document.getElementById('dataContainer');
-    const rootNodeInput = document.getElementById('rootNodeInput').value.trim();
+    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const transactionID = document.getElementById('transactionID').value.trim();
-    const databaseRef = ref(database, `${rootNodeInput}/transactionHistory/eWallet/"${transactionID}"`);
-    const txtView1 = document.getElementById('textView1');
+    const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet/"${transactionID}"`);
     txtView1.textContent = `Transaction ID: ${transactionID}`;
     
     if(transactionID == "") {
