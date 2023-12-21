@@ -13,43 +13,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Handle incoming post req from paymentPage
-app.post('/create-invoice', async (req, res) => {
-    const apiKey = 'xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs';
-    const amount = req.body.amount;
-    const mobileNo = req.body.mobileNo;
-    const eWallet = req.body.selectedValue;
-    console.log(eWallet);
-
-    const payload = {
-        "external_id": "123TEST",
-        "amount": amount,
-        "description": "Invoice Demo #123",
-        "invoice_duration": 300,
-        "currency": "PHP",
-        "payment_methods": [eWallet],
-        "customer": {
-            "mobile_number": mobileNo
-        },
-    };
-    try {
-        const response = await fetch('https://api.xendit.co/v2/invoices', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + Buffer.from(apiKey + ':').toString('base64'),
-            },
-            body: JSON.stringify(payload),
-        });
-        const result = await response.json();
-        console.log(result);
-        res.json(result);
-    } catch (error) {
-        console.error('Error creating invoice:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
 // Monitoring page endpoints.
 app.get('/', (req, res) => {
     const htmlPath = path.join(__dirname,'loginPage.html');
