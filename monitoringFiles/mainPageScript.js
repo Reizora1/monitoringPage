@@ -1,6 +1,8 @@
+// Imports
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js';
 import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js';
+// Firebase SDK
 const firebaseConfig = {
     apiKey: "AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8",
     authDomain: "apsc-database.firebaseapp.com",
@@ -10,6 +12,7 @@ const firebaseConfig = {
     messagingSenderId: "848325536482",
     appId: "1:848325536482:web:efe7c6b0cd442eff6c0cbb"
 };
+// Firebase initialization
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const database = getDatabase(firebaseApp);
@@ -129,7 +132,7 @@ window.toggleCoinEwalletHistory = function() {
     isDisplayEwallet = !isDisplayEwallet;
 };
 
-window.viewMachineInfo = function() {
+function viewMachineInfo() {
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/Machine Information`);
 
@@ -140,7 +143,7 @@ window.viewMachineInfo = function() {
     console.log(rootNode);
 };
 
-window.viewTransactionHistory = function() {
+function viewTransactionHistory() {
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/transactionHistory`);
 
@@ -151,7 +154,7 @@ window.viewTransactionHistory = function() {
     console.log(rootNode);
 };
 
-window.viewTransactionHistoryEwallet = function() {
+function viewTransactionHistoryEwallet() {
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet`);
 
@@ -161,7 +164,7 @@ window.viewTransactionHistoryEwallet = function() {
     });
 };
 
-window.viewTransactionHistoryCoins = function() {
+function viewTransactionHistoryCoins() {
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const databaseRef = ref(database, `${rootNode}/transactionHistory/coins`);
 
@@ -172,7 +175,7 @@ window.viewTransactionHistoryCoins = function() {
 };
 
 // TO OPTIMIZE
-window.searchTransactionHistory = function() { 
+function searchTransactionHistory() { 
     const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
     const transactionID = document.getElementById('transactionID').value.trim();
     const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet/"${transactionID}"`);
