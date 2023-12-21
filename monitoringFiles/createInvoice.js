@@ -1,37 +1,49 @@
 // createInvoice.js
-function createInvoice() {
+async function createInvoice() {
+    const apiKey = 'xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs';
     const amount = document.getElementById('amount').value;
     const mobileNo = document.getElementById('mobileNo').value;
     const eWalletSelected = document.getElementById('selectedEwallet');
-    const selectedValue = eWalletSelected.value;
+    const eWallet = eWalletSelected.value;
+    
     if(amount == ""){
         alert('Please input amount for the payment.');
     }
     else if(amount < 10){
         alert('Please input the minimum amount required for the transaction.');
     }
-    else if(selectedValue == ""){
+    else if(eWallet == ""){
         alert('Please select an eWallet for the payment.');
     }
     else{
-        const data = { amount, mobileNo, selectedValue };
-        fetch('https://apsc-monitoring-webpage.onrender.com/create-invoice', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(result => {
+        const payload = {
+            "external_id": "123TEST",
+            "amount": amount,
+            "description": "Invoice Demo #123",
+            "invoice_duration": 300,
+            "currency": "PHP",
+            "payment_methods": [eWallet],
+            "customer": {
+                "mobile_number": mobileNo
+            },
+        };
+        try {
+            const response = await fetch('https://api.xendit.co/v2/invoices', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + window.btoa(apiKey + ':').toString('base64'),
+                },
+                body: JSON.stringify(payload),
+            });
+            const result = await response.json();
+
             console.log('Invoice created successfully:', result);
             alert('Redirecting to checkout url.');
-            console.log(result.invoice_url);
             window.location.href = result.invoice_url;
-        })
-        .catch(error => {
+
+        } catch (error) {
             console.error('Error creating invoice:', error);
-            alert('Error creating invoice. Please try again.');
-        });
+        }
     }
 }
