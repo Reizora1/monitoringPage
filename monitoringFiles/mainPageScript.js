@@ -167,11 +167,9 @@ function searchTransactionHistory() {
     const rootNode = rootNodeInput.value.trim();
     const transactionID = document.getElementById('transactionID').value.trim();
     const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet/"${transactionID}"`);
-    txtView1.textContent = `Transaction ID: ${transactionID}`;
     
     if(transactionID == "") {
         alert('Enter transactionID to search.');
-        txtView1.style.display = "none";
     }
     else {
         onValue(databaseRef, (snapshot) => {
@@ -179,6 +177,7 @@ function searchTransactionHistory() {
             console.log(data);
             if(data != null) {
                 displayMachineData(data, dataContainer);
+                txtView1.textContent = `Transaction ID: ${transactionID}`;
                 txtView1.style.display = "block";
             }
             else {
