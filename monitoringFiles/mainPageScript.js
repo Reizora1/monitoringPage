@@ -171,6 +171,7 @@ function searchTransactionHistory() {
     
     if(transactionID == "") {
         alert('Enter transactionID to search.');
+        txtView1.textContent = "none";
     }
     else {
         onValue(databaseRef, (snapshot) => {
