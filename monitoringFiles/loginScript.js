@@ -1,6 +1,6 @@
 // Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
 // Firebase SDK
 const firebaseConfig = {
   apiKey: "AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8",
@@ -15,10 +15,59 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 console.log(firebaseApp);
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window.location.href = "mainPage";
+  }
+});
+
+// Login code start	  
+document.getElementById("login").addEventListener("click", function() {
+  let email = document.getElementById("login_email").value;
+  let password = document.getElementById("login_password").value;
+  // For signin
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      //window.location.href = "mainPage";
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      alert("Invalid email or password ! !");
+    });
+});
+
+// New Registration code start	  
+document.getElementById("register").addEventListener("click", function() {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+  let confirmPass = document.getElementById("confirmPass").value;
+  if(password == confirmPass){
+    // For new registration
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+      alert("Registration successful ! !");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      alert(error);
+    });
+  }
+  else{
+    alert("Passwords does not match!");
+    console.log("Passwords does not match!");
+  }
+});
+
 // Forgot Password functionality
 const forgotPasswordLink = document.getElementById("forgotPasswordLink");
 const resetPasswordPopup = document.getElementById("resetPasswordPopup");
-const resetPasswordForm = document.getElementById("resetPasswordForm");
 const resetPasswordBtn = document.getElementById("resetPasswordBtn");
 forgotPasswordLink.addEventListener("click", function () {
   resetPasswordPopup.style.display = "block";
@@ -52,50 +101,4 @@ resetPasswordBtn.addEventListener("click", function () {
       console.error(error.message);
       alert("Error sending password reset email. Please try again.");
     });
-});
-
-// New Registration code start	  
-document.getElementById("register").addEventListener("click", function() {
-let email = document.getElementById("email").value;
-let password = document.getElementById("password").value;
-let confirmPass = document.getElementById("confirmPass").value;
-  if(password == confirmPass){
-    // For new registration
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-      alert("Registration successful ! !");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-      alert(error);
-    });
-  }
-  else{
-    alert("Passwords does not match!");
-    console.log("Passwords does not match!");
-  }
-});
-
-// Login code start	  
-document.getElementById("login").addEventListener("click", function() {
-let email = document.getElementById("login_email").value;
-let password = document.getElementById("login_password").value;
-// For signin
-signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // Redirect to mainPage HTML page after successful login
-    window.location.href = "mainPage";
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
-    alert("Invalid email or password ! !");
-  });
 });
