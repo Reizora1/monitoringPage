@@ -21,15 +21,15 @@ onAuthStateChanged(auth, (user) => {
     const authenticatedContent = document.getElementById('authenticatedContent');
     if (user) {
         authenticatedContent.style.display = 'block';
-        //viewMachineInfo();
         console.log("Logged in with " + user.email);
     } else {
         window.location.href = "loginPage";
     }
 });
 
-// TO OPTIMIZE #4
-const displayTransactBtn = document.getElementById("displayTransaction");
+// HTML elements
+const toggleViewButton = document.getElementById('toggleButton');
+const displayTransactTypeBtn = document.getElementById("displayTransactionType");
 const searchLink = document.getElementById("searchIDLink");
 const searchPopup = document.getElementById("searchPopup");
 const rootNodeInput = document.getElementById('rootNodeInput');
@@ -38,113 +38,111 @@ const dataContainer = document.getElementById('dataContainer');
 const txtView = document.getElementById('textView');
 const txtView1 = document.getElementById('textView1');
 
-// Search button functionality - TO OPTIMIZE #3
-searchLink.addEventListener("click", function () {
-    if(rootNodeInput.value.trim() == "") {
-        alert('Please enter a MachineID first!');
-        dataContainer.style.display = "none";
-        txtView1.style.display = "none";
-    }
-    else {
-        searchPopup.style.display = "block";
-    }
-});
-// search transactionID popUp
-function closesearchPopup() {
-    searchPopup.style.display = "none";
-}
-// For close button in resetPass popup
-document.body.addEventListener('click', function(event) {
-    if (event.target.classList.contains('close')) {
-        closesearchPopup();
-    }
-});
-window.addEventListener("click", function (event) {
-    if (event.target == searchPopup) {
-        closesearchPopup();
-    }
-});
-searchBtn.addEventListener("click", function () {
-    searchTransactionHistory();
-    dataContainer.style.display = "block";
-    closesearchPopup();
-});
-
+// Toggle view functionality for machineData and transactionHistory.
 let isTransactionHistoryView = false;
 window.toggleView = function() {
-    const button = document.getElementById('toggleButton');
-
     if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
         dataContainer.style.display = "none";
         txtView1.style.display = "none";
         return;
     }
-    else if (isTransactionHistoryView) {
-        button.textContent = 'View Machine Data';
+    else if (isTransactionHistoryView) { // 2nd to display on the 2nd toggleViewButton click.
+        toggleViewButton.textContent = 'View Machine Data';
         txtView.textContent = 'TRANSACTION HISTORY';
-        viewTransactionHistory();
+        viewData();
         searchLink.style.display = "block";
-        displayTransactBtn.style.display = "block";
+        displayTransactTypeBtn.style.display = "block";
         dataContainer.style.display = "block";
         console.log("Viewing Transaction History.");
     }
-    else {
-        button.textContent = 'View Transaction History';
+    else { // 1st to display on the initial toggleViewButton click.
+        toggleViewButton.textContent = 'View Transaction History';
         txtView.textContent = 'MACHINE DATA';
-        viewMachineInfo();
+        viewData();
         searchLink.style.display = "none";
-        displayTransactBtn.style.display = "none";
+        displayTransactTypeBtn.style.display = "none";
         txtView1.style.display = "none";
         dataContainer.style.display = "block";
         console.log("Viewing Machine Data.");
     }
-    
     isTransactionHistoryView = !isTransactionHistoryView;
 };
 
-let isDisplayEwallet = false;
-window.toggleCoinEwalletHistory = function() {
-    const button = document.getElementById('displayTransaction');
+function viewData() {
+    const rootNode = rootNodeInput.value.trim();
+    if(!isTransactionHistoryView) {
+        const databaseRef = ref(database, `${rootNode}/Machine Information`);
+        onValue(databaseRef, (snapshot) => {
+            toggleViewButton.textContent = "View Transaction History"
+            txtView.textContent = "MACHINE DATA";
+            txtView1.style.display = "none";
+            displayTransactTypeBtn.style.display = "none";
+            searchLink.style.display = "none";
+            const data = snapshot.val();
+            displayMachineData(data, dataContainer);
+        });
+        console.log(rootNode);
+    }
+    else {
+        const databaseRef = ref(database, `${rootNode}/transactionHistory`);
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            displayTransactionData(data, dataContainer);
+        });
+        console.log(rootNode);
+    }
+};
 
+// Toggle view functionality for coins and eWallet.
+let isDisplayEwalletHistory = false;
+window.toggleCoinEwalletHistory = function() {
     if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
         dataContainer.style.display = "none";
         txtView1.style.display = "none";
         return;
     }
-    else if (isDisplayEwallet) {
-        button.textContent = 'Display Coins';
+    else if (isDisplayEwalletHistory) {
+        displayTransactTypeBtn.textContent = 'Display Coins';
         txtView1.style.display = "block";
         dataContainer.style.display = "block";
         txtView1.textContent = "EWALLET TRANSACTIONS";
-        viewTransactionHistoryEwallet();
+        viewTransactionHistoryType();
         console.log("Viewing E-Wallet History.");
     }
     else {
-        button.textContent = 'Display E-Wallet';
+        displayTransactTypeBtn.textContent = 'Display E-Wallet';
         txtView1.style.display = "block";
         dataContainer.style.display = "block";
         txtView1.textContent = "COIN TRANSACTIONS";
-        viewTransactionHistoryCoins();
+        viewTransactionHistoryType();
         console.log("Viewing Coins History.");
     }
-    isDisplayEwallet = !isDisplayEwallet;
+    isDisplayEwalletHistory = !isDisplayEwalletHistory;
 };
 
-function viewMachineInfo() {
-    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
-    const databaseRef = ref(database, `${rootNode}/Machine Information`);
-
-    onValue(databaseRef, (snapshot) => {
-        const data = snapshot.val();
-        displayMachineData(data, dataContainer);
-    });
-    console.log(rootNode);
+function viewTransactionHistoryType() {
+    const rootNode = rootNodeInput.value.trim();
+    if(!isDisplayEwalletHistory) {
+        const databaseRef = ref(database, `${rootNode}/transactionHistory/coins`);
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            displayTransactionData(data, dataContainer);
+        });
+    }
+    else {
+        const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet`);
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            displayTransactionData(data, dataContainer);
+        });
+    }
 };
 
-function viewTransactionHistory() {
-    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
+// This function is streamlined into the viewData().
+/*function viewTransactionHistory() {
+    const rootNode = rootNodeInput.value.trim();
     const databaseRef = ref(database, `${rootNode}/transactionHistory`);
 
     onValue(databaseRef, (snapshot) => {
@@ -152,31 +150,21 @@ function viewTransactionHistory() {
         displayTransactionData(data, dataContainer);
     });
     console.log(rootNode);
-};
-
-function viewTransactionHistoryEwallet() {
-    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
-    const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet`);
-
-    onValue(databaseRef, (snapshot) => {
-        const data = snapshot.val();
-        displayTransactionData(data, dataContainer);
-    });
-};
-
-function viewTransactionHistoryCoins() {
-    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
+};*/
+// This function is streamlined into the viewTransactionHistoryType().
+/*function viewTransactionHistoryCoins() {
+    const rootNode = rootNodeInput.value.trim();
     const databaseRef = ref(database, `${rootNode}/transactionHistory/coins`);
 
     onValue(databaseRef, (snapshot) => {
         const data = snapshot.val();
         displayTransactionData(data, dataContainer);
     });
-};
+};*/
 
-// TO OPTIMIZE
+// Search transactionID from database functionality
 function searchTransactionHistory() { 
-    const rootNode = rootNodeInput.value.trim(); // Get the value and remove leading/trailing spaces
+    const rootNode = rootNodeInput.value.trim();
     const transactionID = document.getElementById('transactionID').value.trim();
     const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet/"${transactionID}"`);
     txtView1.textContent = `Transaction ID: ${transactionID}`;
@@ -201,15 +189,37 @@ function searchTransactionHistory() {
     }
 };
 
-window.logout = function() {
-    signOut(auth)
-        .then(() => {
-            // Sign-out successful.
-        })
-        .catch((error) => {
-            console.error(`Logout failed: ${error.message}`);
-        });
-};
+// Search transactionID link functionality
+searchLink.addEventListener("click", function () {
+    if(rootNodeInput.value.trim() == "") {
+        alert('Please enter a MachineID first!');
+        dataContainer.style.display = "none";
+        txtView1.style.display = "none";
+    }
+    else {
+        searchPopup.style.display = "block";
+    }
+});
+// search transactionID popUp
+function closesearchPopup() {
+    searchPopup.style.display = "none";
+}
+// For close toggleViewButton in search popup
+document.body.addEventListener('click', function(event) {
+    if (event.target.classList.contains('close')) {
+        closesearchPopup();
+    }
+});
+window.addEventListener("click", function (event) {
+    if (event.target == searchPopup) {
+        closesearchPopup();
+    }
+});
+searchBtn.addEventListener("click", function () {
+    searchTransactionHistory();
+    dataContainer.style.display = "block";
+    closesearchPopup();
+});
 
 function displayMachineData(data, container) {
     const table = document.createElement('table');
@@ -254,7 +264,6 @@ function displayTransactionData(data, container) {
 
         for (const key of latestKeys) {
             const row = document.createElement('tr');
-
             const keyCell = document.createElement('td');
             keyCell.textContent = key;
             row.appendChild(keyCell);
@@ -267,7 +276,6 @@ function displayTransactionData(data, container) {
             } else {
                 valueCell.textContent = value;
             }
-
             row.appendChild(valueCell);
             tbody.appendChild(row);
         }
@@ -283,3 +291,13 @@ function displayTransactionData(data, container) {
     container.innerHTML = '';
     container.appendChild(table);
 }
+
+window.logout = function() {
+    signOut(auth)
+        .then(() => {
+            // Sign-out successful.
+        })
+        .catch((error) => {
+            console.error(`Logout failed: ${error.message}`);
+        });
+};
