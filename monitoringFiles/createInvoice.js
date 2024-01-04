@@ -39,7 +39,8 @@ async function createInvoice() {
             const result = await response.json();
 
             console.log('Invoice created successfully:', result);
-            alert('Redirecting to checkout url.');
+            let alertText = `Redirecting to checkout url.\nTransaction ID: ${result.id}`;
+            alert(alertText);
             window.location.href = result.invoice_url;
 
         } catch (error) {
