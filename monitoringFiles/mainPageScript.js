@@ -2,6 +2,9 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js';
 import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js';
+
+let userID;
+
 // Firebase SDK
 const firebaseConfig = {
     apiKey: "AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8",
@@ -20,8 +23,9 @@ const database = getDatabase(firebaseApp);
 onAuthStateChanged(auth, (user) => {
     const authenticatedContent = document.getElementById('authenticatedContent');
     if (user) {
+        userID = user.uid;
         authenticatedContent.style.display = 'block';
-        console.log("Logged in with " + user.email);
+        welcomeTxt.textContent = `Welcome, ${user.email}!`;
     } else {
         window.location.href = "loginPage";
     }
@@ -37,6 +41,7 @@ const searchBtn = document.getElementById("searchBtn");
 const dataContainer = document.getElementById('dataContainer');
 const txtView = document.getElementById('textView');
 const txtView1 = document.getElementById('textView1');
+const welcomeTxt = document.getElementById('welcomeTxt');
 
 // Toggle view functionality for machineData and transactionHistory.
 let isTransactionHistoryView = false;
@@ -72,7 +77,7 @@ window.toggleView = function() {
 function viewData() {
     const rootNode = rootNodeInput.value.trim();
     if(!isTransactionHistoryView) {
-        const databaseRef = ref(database, `${rootNode}/Machine Information`);
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/Machine Information`);
         onValue(databaseRef, (snapshot) => {
             toggleViewButton.textContent = "View Transaction History"
             txtView.textContent = "MACHINE DATA";
@@ -85,7 +90,7 @@ function viewData() {
         console.log(rootNode);
     }
     else {
-        const databaseRef = ref(database, `${rootNode}/transactionHistory`);
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory`);
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
             displayTransactionData(data, dataContainer);
@@ -125,14 +130,14 @@ window.toggleCoinEwalletHistory = function() {
 function viewTransactionHistoryType() {
     const rootNode = rootNodeInput.value.trim();
     if(!isDisplayEwalletHistory) {
-        const databaseRef = ref(database, `${rootNode}/transactionHistory/coins`);
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/coins`);
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
             displayTransactionData(data, dataContainer);
         });
     }
     else {
-        const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet`);
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/eWallet`);
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
             displayTransactionData(data, dataContainer);
@@ -140,33 +145,12 @@ function viewTransactionHistoryType() {
     }
 };
 
-// This function is streamlined into the viewData().
-/*function viewTransactionHistory() {
-    const rootNode = rootNodeInput.value.trim();
-    const databaseRef = ref(database, `${rootNode}/transactionHistory`);
-
-    onValue(databaseRef, (snapshot) => {
-        const data = snapshot.val();
-        displayTransactionData(data, dataContainer);
-    });
-    console.log(rootNode);
-};*/
-// This function is streamlined into the viewTransactionHistoryType().
-/*function viewTransactionHistoryCoins() {
-    const rootNode = rootNodeInput.value.trim();
-    const databaseRef = ref(database, `${rootNode}/transactionHistory/coins`);
-
-    onValue(databaseRef, (snapshot) => {
-        const data = snapshot.val();
-        displayTransactionData(data, dataContainer);
-    });
-};*/
-
 // Search transactionID from database functionality
 function searchTransactionHistory() { 
     const rootNode = rootNodeInput.value.trim();
     const transactionID = document.getElementById('transactionID').value.trim();
-    const databaseRef = ref(database, `${rootNode}/transactionHistory/eWallet/"${transactionID}"`);
+    const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/eWallet/"${transactionID}"`);
+    txtView1.textContent = `Transaction ID: ${transactionID}`;
     
     if(transactionID == "") {
         alert('Enter transactionID to search.');
@@ -177,7 +161,6 @@ function searchTransactionHistory() {
             console.log(data);
             if(data != null) {
                 displayMachineData(data, dataContainer);
-                txtView1.textContent = `Transaction ID: ${transactionID}`;
                 txtView1.style.display = "block";
             }
             else {
