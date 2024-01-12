@@ -1,10 +1,12 @@
 // Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js';
 // Firebase SDK
 const firebaseConfig = {
   apiKey: "AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8",
   authDomain: "apsc-database.firebaseapp.com",
+  databaseURL: "https://apsc-database-default-rtdb.asia-southeast1.firebasedatabase.app/",
   projectId: "apsc-database",
   storageBucket: "apsc-database.appspot.com",
   messagingSenderId: "848325536482",
@@ -13,13 +15,7 @@ const firebaseConfig = {
 // Firebase initialization
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
-console.log(firebaseApp);
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    window.location.href = "mainPage";
-  }
-});
+const database = getDatabase(firebaseApp);
 
 // Login code start	  
 document.getElementById("login").addEventListener("click", function() {
@@ -29,7 +25,7 @@ document.getElementById("login").addEventListener("click", function() {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
-      //window.location.href = "mainPage";
+      window.location.href = "mainPage";
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -49,7 +45,19 @@ document.getElementById("register").addEventListener("click", function() {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log(user);
+      const dataRef = ref(database, `users/uid/${user.uid}`);
+
+      set(dataRef, {
+        email: user.email
+        // Add more fields as needed
+      })
+      .then(() => {
+        console.log("User node created successfully");
+      })
+      .catch((error) => {
+        console.error("Error creating user node:", error.message);
+      });
+
       alert("Registration successful ! !");
     })
     .catch((error) => {
