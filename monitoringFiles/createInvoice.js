@@ -17,7 +17,8 @@ async function createInvoice() {
     }
     else{
         const payload = {
-            "external_id": "123TEST",
+            //externalID is the unique identifier for each individual machines.
+            "external_id": "machineTest1",
             "amount": amount,
             "description": "Invoice Demo #123",
             "invoice_duration": 300,
