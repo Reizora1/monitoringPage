@@ -49,7 +49,6 @@ document.getElementById("register").addEventListener("click", function() {
 
       set(dataRef, {
         email: user.email
-        // Add more fields as needed
       })
       .then(() => {
         console.log("User node created successfully");
