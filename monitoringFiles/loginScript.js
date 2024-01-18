@@ -40,14 +40,34 @@ document.getElementById("register").addEventListener("click", function() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
   let confirmPass = document.getElementById("confirmPass").value;
+  let initializeNewUserNode = {
+    'Machine Information': {
+      coinsTotal: 0,
+      current: 0,
+      eWalletTotal: 0,
+      lastDataUpdate: 0,
+      reservoirLevel1: 0,
+      reservoirLevel2: 0,
+      voltage: 0
+    },
+    transactionHistory: {
+      coins: {
+        coinsTranasctionIdSample: 0
+      },
+      eWallet: {
+        eWalletTranasctionIdSample: 0
+      }
+    }
+  };
   if(password == confirmPass){
     // For new registration
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       const dataRef = ref(database, `users/uid/${user.uid}`);
-
+      //initializeNewUser
       set(dataRef, {
+        TST001: initializeNewUserNode,
         email: user.email
       })
       .then(() => {
@@ -56,7 +76,6 @@ document.getElementById("register").addEventListener("click", function() {
       .catch((error) => {
         console.error("Error creating user node:", error.message);
       });
-
       alert("Registration successful ! !");
     })
     .catch((error) => {
