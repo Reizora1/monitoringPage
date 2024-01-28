@@ -149,7 +149,7 @@ function viewTransactionHistoryType() {
 function searchTransactionHistory() { 
     const rootNode = rootNodeInput.value.trim();
     const transactionID = document.getElementById('transactionID').value.trim();
-    const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/eWallet/"${transactionID}"`);
+    const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/eWallet/${transactionID}`);
     txtView1.textContent = `Transaction ID: ${transactionID}`;
     
     if(transactionID == "") {
