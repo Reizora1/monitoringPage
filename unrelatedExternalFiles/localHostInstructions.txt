@@ -1,0 +1,13 @@
+Setting Up a Local Server in CMD:
+Install live-server (if not installed):
+npm install -g live-server
+
+Navigate to your project directory:
+cd path/to/your/project
+
+Start the local server:
+live-server
+
+OR
+
+TYPE node server.js in the terminal on its current path to RUN THE SERVER.JS FILE IN THIS FOLDER.
