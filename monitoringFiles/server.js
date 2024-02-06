@@ -65,6 +65,74 @@ app.get('/mainPage', (req, res) => {
     }
 });
 
+app.get('/paymentPage', (req, res) => {
+    const htmlPath = path.join(__dirname,'paymentPage.html');
+    //const cssPath = path.join(__dirname, 'mainPageStyles.css');
+    const jsPath = path.join(__dirname, 'createInvoice.js');
+    
+    if (fileExists(htmlPath) /*&& fileExists(cssPath)*/ && fileExists(jsPath)) {
+        //const cssContent = fs.readFileSync(cssPath, 'utf8');
+        const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+        const jsContent = fs.readFileSync(jsPath, 'utf8');
+        res.send(`
+            ${htmlContent}
+        `);
+    } else {
+        res.status(404).send('404 Not Found');
+    }
+});
+
+app.get('/paymentPage2', (req, res) => {
+    const htmlPath = path.join(__dirname,'paymentPage2.html');
+    //const cssPath = path.join(__dirname, 'mainPageStyles.css');
+    const jsPath = path.join(__dirname, 'createInvoice2.js');
+    
+    if (fileExists(htmlPath) /*&& fileExists(cssPath)*/ && fileExists(jsPath)) {
+        //const cssContent = fs.readFileSync(cssPath, 'utf8');
+        const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+        const jsContent = fs.readFileSync(jsPath, 'utf8');
+        res.send(`
+            ${htmlContent}
+        `);
+    } else {
+        res.status(404).send('404 Not Found');
+    }
+});
+
+app.get('/paymentPage3', (req, res) => {
+    const htmlPath = path.join(__dirname,'paymentPage3.html');
+    //const cssPath = path.join(__dirname, 'mainPageStyles.css');
+    const jsPath = path.join(__dirname, 'createInvoice3.js');
+    
+    if (fileExists(htmlPath) /*&& fileExists(cssPath)*/ && fileExists(jsPath)) {
+        //const cssContent = fs.readFileSync(cssPath, 'utf8');
+        const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+        const jsContent = fs.readFileSync(jsPath, 'utf8');
+        res.send(`
+            ${htmlContent}
+        `);
+    } else {
+        res.status(404).send('404 Not Found');
+    }
+});
+
+app.get('/paymentPage4', (req, res) => {
+    const htmlPath = path.join(__dirname,'paymentPage4.html');
+    //const cssPath = path.join(__dirname, 'mainPageStyles.css');
+    const jsPath = path.join(__dirname, 'createInvoice4.js');
+    
+    if (fileExists(htmlPath) /*&& fileExists(cssPath)*/ && fileExists(jsPath)) {
+        //const cssContent = fs.readFileSync(cssPath, 'utf8');
+        const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+        const jsContent = fs.readFileSync(jsPath, 'utf8');
+        res.send(`
+            ${htmlContent}
+        `);
+    } else {
+        res.status(404).send('404 Not Found');
+    }
+});
+
 function fileExists(filePath) {
     try {
         return fs.statSync(filePath).isFile();
