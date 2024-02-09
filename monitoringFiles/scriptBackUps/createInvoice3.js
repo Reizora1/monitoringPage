@@ -2,7 +2,8 @@
 async function createInvoice() {
     const apiKey = 'xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs';
     const amount = document.getElementById('amount').value;
-    const mobileNo = document.getElementById('mobileNo').value;
+    //const mobileNo = document.getElementById('mobileNo').value;
+    const customerEmail = document.getElementById('cEmail').value;
     const eWalletSelected = document.getElementById('selectedEwallet');
     const eWallet = eWalletSelected.value;
     
@@ -25,7 +26,16 @@ async function createInvoice() {
             "currency": "PHP",
             "payment_methods": [eWallet],
             "customer": {
-                "mobile_number": mobileNo
+                //"mobile_number": mobileNo,
+                "email": customerEmail
+            },
+            "customer_notification_preference": {
+                "invoice_created": [
+                    "email"
+                ],
+                "invoice_paid": [
+                    "email"
+                ]
             },
         };
         try {
