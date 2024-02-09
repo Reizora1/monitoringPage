@@ -1,1 +1,61 @@
-(function(_0x36992c,_0x453d0c){const _0x13f60e=_0x4671,_0x4a75d5=_0x36992c();while(!![]){try{const _0x2234d8=-parseInt(_0x13f60e(0x157))/0x1+parseInt(_0x13f60e(0x158))/0x2+parseInt(_0x13f60e(0x14b))/0x3+-parseInt(_0x13f60e(0x149))/0x4*(-parseInt(_0x13f60e(0x13c))/0x5)+-parseInt(_0x13f60e(0x15a))/0x6*(parseInt(_0x13f60e(0x148))/0x7)+-parseInt(_0x13f60e(0x151))/0x8+parseInt(_0x13f60e(0x154))/0x9*(-parseInt(_0x13f60e(0x15d))/0xa);if(_0x2234d8===_0x453d0c)break;else _0x4a75d5['push'](_0x4a75d5['shift']());}catch(_0x3799a9){_0x4a75d5['push'](_0x4a75d5['shift']());}}}(_0x379f,0xe9e12));function _0x4671(_0x3d816c,_0x8feed2){const _0x379fd3=_0x379f();return _0x4671=function(_0x4671f6,_0x553655){_0x4671f6=_0x4671f6-0x139;let _0x38d20f=_0x379fd3[_0x4671f6];return _0x38d20f;},_0x4671(_0x3d816c,_0x8feed2);}async function createInvoice(){const _0x5d3764=_0x4671,_0x51d8d7=_0x5d3764(0x140),_0x1ab4c7=document['getElementById']('amount')['value'],_0x2901fc=document[_0x5d3764(0x153)]('cEmail')[_0x5d3764(0x146)],_0x57d831=document[_0x5d3764(0x153)](_0x5d3764(0x143)),_0x1367f2=_0x57d831[_0x5d3764(0x146)];if(_0x1ab4c7=='')alert(_0x5d3764(0x14a));else{if(_0x1ab4c7<0xa)alert(_0x5d3764(0x15b));else{if(_0x1367f2=='')alert(_0x5d3764(0x155));else{const _0x20cc01={'external_id':_0x5d3764(0x14f),'amount':_0x1ab4c7,'description':_0x5d3764(0x13d),'invoice_duration':0x12c,'currency':_0x5d3764(0x150),'payment_methods':[_0x1367f2],'customer':{'email':_0x2901fc},'customer_notification_preference':{'invoice_created':[_0x5d3764(0x13f)],'invoice_paid':[_0x5d3764(0x13f)]}};try{const _0x295b23=await fetch(_0x5d3764(0x13a),{'method':_0x5d3764(0x139),'headers':{'Content-Type':_0x5d3764(0x147),'Authorization':_0x5d3764(0x14c)+window[_0x5d3764(0x13b)](_0x51d8d7+':')[_0x5d3764(0x159)](_0x5d3764(0x14e))},'body':JSON['stringify'](_0x20cc01)}),_0x475ae5=await _0x295b23[_0x5d3764(0x156)]();console[_0x5d3764(0x13e)](_0x5d3764(0x152),_0x475ae5);let _0x1296a3=_0x5d3764(0x145)+_0x475ae5['id'];alert(_0x1296a3),window[_0x5d3764(0x141)][_0x5d3764(0x142)]=_0x475ae5[_0x5d3764(0x15c)];}catch(_0x14eabb){console[_0x5d3764(0x14d)](_0x5d3764(0x144),_0x14eabb);}}}}}function _0x379f(){const _0x595368=['2083424dKjnkX','Invoice\x20created\x20successfully:','getElementById','4554333BhEdOq','Please\x20select\x20an\x20eWallet\x20for\x20the\x20payment.','json','618493ucFEjj','691566ThxLfb','toString','6UvHhAt','Please\x20input\x20the\x20minimum\x20amount\x20required\x20for\x20the\x20transaction.','invoice_url','30olpHps','POST','https://api.xendit.co/v2/invoices','btoa','10310xTblDH','Invoice\x20Demo\x20#123','log','email','xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs','location','href','selectedEwallet','Error\x20creating\x20invoice:','Redirecting\x20to\x20checkout\x20url.\x0aTransaction\x20ID:\x20','value','application/json','669109fWmoPs','3308GFvCCD','Please\x20input\x20amount\x20for\x20the\x20payment.','4198596AIuxgf','Basic\x20','error','base64','machineTest2','PHP'];_0x379f=function(){return _0x595368;};return _0x379f();}
+// createInvoice.js
+async function createInvoice() {
+    const apiKey = 'xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs';
+    const amount = document.getElementById('amount').value;
+    //const mobileNo = document.getElementById('mobileNo').value;
+    const customerEmail = document.getElementById('cEmail').value;
+    const eWalletSelected = document.getElementById('selectedEwallet');
+    const eWallet = eWalletSelected.value;
+    
+    if(amount == ""){
+        alert('Please input amount for the payment.');
+    }
+    else if(amount < 10){
+        alert('Please input the minimum amount required for the transaction.');
+    }
+    else if(eWallet == ""){
+        alert('Please select an eWallet for the payment.');
+    }
+    else{
+        const payload = {
+            //externalID is the unique identifier for each individual machines.
+            "external_id": "machineTest2",
+            "amount": amount,
+            "description": "Invoice Demo #123",
+            "invoice_duration": 300,
+            "currency": "PHP",
+            "payment_methods": [eWallet],
+            "customer": {
+                //"mobile_number": mobileNo,
+                "email": customerEmail
+            },
+            "customer_notification_preference": {
+                "invoice_created": [
+                    "email"
+                ],
+                "invoice_paid": [
+                    "email"
+                ]
+            },
+        };
+        try {
+            const response = await fetch('https://api.xendit.co/v2/invoices', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + window.btoa(apiKey + ':').toString('base64'),
+                },
+                body: JSON.stringify(payload),
+            });
+            const result = await response.json();
+
+            console.log('Invoice created successfully:', result);
+            let alertText = `Redirecting to checkout url.\nTransaction ID: ${result.id}`;
+            alert(alertText);
+            window.location.href = result.invoice_url;
+
+        } catch (error) {
+            console.error('Error creating invoice:', error);
+        }
+    }
+}
