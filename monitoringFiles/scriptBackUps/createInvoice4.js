@@ -3,9 +3,35 @@ async function createInvoice() {
     const apiKey = 'xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs';
     const amount = document.getElementById('amount').value;
     //const mobileNo = document.getElementById('mobileNo').value;
-    const customerEmail = document.getElementById('cEmail').value;
+    let customerEmail = document.getElementById('cEmail').value;
     const eWalletSelected = document.getElementById('selectedEwallet');
     const eWallet = eWalletSelected.value;
+
+    if(customerEmail == ""){
+        customerEmail = "admin@admin.com";
+    }
+
+    const payload = {
+        //externalID is the unique identifier for each individual machines.
+        "external_id": "machineTest1",
+        "amount": amount,
+        "description": "Invoice Demo #123",
+        "invoice_duration": 300,
+        "currency": "PHP",
+        "payment_methods": [eWallet],
+        "customer": {
+            //"mobile_number": mobileNo,
+            "email": customerEmail
+        },
+        "customer_notification_preference": {
+            "invoice_created": [
+                "email"
+            ],
+            "invoice_paid": [
+                "email"
+            ]
+        },
+    };
     
     if(amount == ""){
         alert('Please input amount for the payment.');
@@ -17,27 +43,6 @@ async function createInvoice() {
         alert('Please select an eWallet for the payment.');
     }
     else{
-        const payload = {
-            //externalID is the unique identifier for each individual machines.
-            "external_id": "machineTest4",
-            "amount": amount,
-            "description": "Invoice Demo #123",
-            "invoice_duration": 300,
-            "currency": "PHP",
-            "payment_methods": [eWallet],
-            "customer": {
-                //"mobile_number": mobileNo,
-                "email": customerEmail
-            },
-            "customer_notification_preference": {
-                "invoice_created": [
-                    "email"
-                ],
-                "invoice_paid": [
-                    "email"
-                ]
-            },
-        };
         try {
             const response = await fetch('https://api.xendit.co/v2/invoices', {
                 method: 'POST',
