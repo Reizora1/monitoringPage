@@ -1,6 +1,6 @@
 // createInvoice.js
 async function createInvoice() {
-    const apiKey = 'xnd_development_pBpucoqdlThPhCFsJixhcQh0SCVIBnTAS8JNiDPKtJaWbZSEKd78AYwqiPcKs';
+    const apiKey = process.env.XENDIT_API_KEY;
     const amount = document.getElementById('amount').value;
     //const mobileNo = document.getElementById('mobileNo').value;
     let customerEmail = document.getElementById('cEmail').value;
