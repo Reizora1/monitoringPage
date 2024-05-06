@@ -1,1 +1,66 @@
-function p(f,P){const h=n();return p=function(o,I){o=o-0x16f;let m=h[o];return m;},p(f,P);}(function(f,P){const Y=p,h=f();while(!![]){try{const o=-parseInt(Y(0x179))/0x1+parseInt(Y(0x17e))/0x2*(parseInt(Y(0x18c))/0x3)+parseInt(Y(0x187))/0x4+parseInt(Y(0x172))/0x5+-parseInt(Y(0x16f))/0x6+parseInt(Y(0x17b))/0x7+-parseInt(Y(0x171))/0x8*(parseInt(Y(0x185))/0x9);if(o===P)break;else h['push'](h['shift']());}catch(I){h['push'](h['shift']());}}}(n,0x68794));function n(){const G=['selectedEwallet','XENDIT_API_KEY','PHP','Please\x20input\x20the\x20minimum\x20amount\x20required\x20for\x20the\x20transaction.','getElementById','15447UWfwpj','toString','4376477lRTLAX','Please\x20input\x20amount\x20for\x20the\x20payment.','invoice_url','556RRikBE','cEmail','application/json','mac01','Invoice\x20Demo\x20#123','log','location','27UkgutE','stringify','1305060PxbWyM','env','email','Redirecting\x20to\x20checkout\x20url.\x0aTransaction\x20ID:\x20','admin@admin.com','5556ZwVmpf','Please\x20select\x20an\x20eWallet\x20for\x20the\x20payment.','POST','Basic\x20','value','4229088mmxQOu','json','2654840gXqdys','3387260GWTlsR','Invoice\x20created\x20successfully:'];n=function(){return G;};return n();}async function createInvoice(){const X=p,f=process[X(0x188)][X(0x175)],P=document[X(0x178)]('amount')[X(0x190)];let h=document[X(0x178)](X(0x17f))[X(0x190)];const o=document[X(0x178)](X(0x174)),I=o[X(0x190)];h==''&&(h=X(0x18b));const m={'external_id':X(0x181),'amount':P,'description':X(0x182),'invoice_duration':0x12c,'currency':X(0x176),'payment_methods':[I],'customer':{'email':h},'customer_notification_preference':{'invoice_created':[X(0x189)],'invoice_paid':[X(0x189)]}};if(P=='')alert(X(0x17c));else{if(P<0xa)alert(X(0x177));else{if(I=='')alert(X(0x18d));else try{const c=await fetch('https://api.xendit.co/v2/invoices',{'method':X(0x18e),'headers':{'Content-Type':X(0x180),'Authorization':X(0x18f)+window['btoa'](f+':')[X(0x17a)]('base64')},'body':JSON[X(0x186)](m)}),d=await c[X(0x170)]();console[X(0x183)](X(0x173),d);let S=X(0x18a)+d['id'];alert(S),window[X(0x184)]['href']=d[X(0x17d)];}catch(K){console['error']('Error\x20creating\x20invoice:',K);}}}}
+// createInvoice.js
+async function createInvoice() {
+    const apiKey = process.env.XENDIT_API_KEY;
+    const amount = document.getElementById('amount').value;
+    //const mobileNo = document.getElementById('mobileNo').value;
+    let customerEmail = document.getElementById('cEmail').value;
+    const eWalletSelected = document.getElementById('selectedEwallet');
+    const eWallet = eWalletSelected.value;
+
+    if(customerEmail == ""){
+        customerEmail = "admin@admin.com";
+    }
+
+    const payload = {
+        //externalID is the unique identifier for each individual machines.
+        "external_id": "mac01",
+        "amount": amount,
+        "description": "Invoice Demo #123",
+        "invoice_duration": 300,
+        "currency": "PHP",
+        "payment_methods": [eWallet],
+        "customer": {
+            //"mobile_number": mobileNo,
+            "email": customerEmail
+        },
+        "customer_notification_preference": {
+            "invoice_created": [
+                "email"
+            ],
+            "invoice_paid": [
+                "email"
+            ]
+        },
+    };
+    
+    if(amount == ""){
+        alert('Please input amount for the payment.');
+    }
+    else if(amount < 10){
+        alert('Please input the minimum amount required for the transaction.');
+    }
+    else if(eWallet == ""){
+        alert('Please select an eWallet for the payment.');
+    }
+    else{
+        try {
+            const response = await fetch('https://api.xendit.co/v2/invoices', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + window.btoa(apiKey + ':').toString('base64'),
+                },
+                body: JSON.stringify(payload),
+            });
+            const result = await response.json();
+
+            console.log('Invoice created successfully:', result);
+            let alertText = `Redirecting to checkout url.\nTransaction ID: ${result.id}`;
+            alert(alertText);
+            window.location.href = result.invoice_url;
+
+        } catch (error) {
+            console.error('Error creating invoice:', error);
+        }
+    }
+}
