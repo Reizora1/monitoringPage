@@ -58,6 +58,7 @@ window.toggleView = function() {
         viewData();
         searchLink.style.display = "block";
         displayTransactTypeBtn.style.display = "block";
+        txtView1.style.display = "block";
         dataContainer.style.display = "block";
         console.log("Viewing Transaction History.");
     }
