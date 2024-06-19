@@ -93,14 +93,14 @@ function viewData() {
         const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory`);
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
-            displayTransactionData(data, dataContainer);
+            viewTransactionHistoryType();
         });
         console.log(rootNode);
     }
 };
 
 // Toggle view functionality for coins and eWallet.
-let isDisplayEwalletHistory = false;
+/*let isDisplayEwalletHistory = false;
 window.toggleCoinEwalletHistory = function() {
     if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
@@ -125,7 +125,7 @@ window.toggleCoinEwalletHistory = function() {
         console.log("Viewing Coins History.");
     }
     isDisplayEwalletHistory = !isDisplayEwalletHistory;
-};
+};*/
 
 function viewTransactionHistoryType() {
     const rootNode = rootNodeInput.value.trim();
