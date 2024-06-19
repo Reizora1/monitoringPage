@@ -281,19 +281,17 @@ function displayCoinTransactionData(data, container) {
 
     if (data && typeof data === 'object') {
         const keys = Object.keys(data).sort((a, b) => b - a);
-        const latestKeys = keys.slice(-5).reverse();
+        const latestKeys = keys.filter(key => key.length >= 10).slice(-5).reverse();
 
         for (const key of latestKeys) {
             const row = document.createElement('tr');
             const keyCell = document.createElement('td');
-            if (key.length >= 10) {
-                keyCell.textContent = key;
-                row.appendChild(keyCell);
-            }
+            keyCell.textContent = key;
+            row.appendChild(keyCell);
             const valueCell = document.createElement('td');
             const value = data[key];
 
-            if (typeof value === 'object' && key.length >= 10) {
+            if (typeof value === 'object') {
                 displayTransactionData(value, valueCell);
             } else {
                 valueCell.textContent = value;
