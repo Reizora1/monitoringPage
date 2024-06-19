@@ -55,6 +55,7 @@ window.toggleView = function() {
     else if (isTransactionHistoryView) { // 2nd to display on the 2nd toggleViewButton click.
         toggleViewButton.textContent = 'View Machine Data';
         txtView.textContent = 'TRANSACTION HISTORY';
+        txtView1.textContent = "EWALLET TRANSACTIONS";
         viewData();
         searchLink.style.display = "block";
         displayTransactTypeBtn.style.display = "block";
