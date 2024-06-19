@@ -93,7 +93,7 @@ function viewData() {
         const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory`);
         onValue(databaseRef, (snapshot) => {
             const data = snapshot.val();
-            viewTransactionHistoryType();
+            toggleCoinEwalletHistory();
         });
         console.log(rootNode);
     }
@@ -102,8 +102,7 @@ function viewData() {
 // Toggle view functionality for coins and eWallet.
 let isDisplayEwalletHistory = false;
 window.toggleCoinEwalletHistory = function() {
-    viewTransactionHistoryType();
-    /*if (rootNodeInput.value.trim() == "") {
+    if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
         dataContainer.style.display = "none";
         txtView1.style.display = "none";
@@ -125,7 +124,7 @@ window.toggleCoinEwalletHistory = function() {
         viewTransactionHistoryType();
         console.log("Viewing Coins History.");
     }
-    isDisplayEwalletHistory = !isDisplayEwalletHistory;*/
+    isDisplayEwalletHistory = !isDisplayEwalletHistory;
 };
 
 function viewTransactionHistoryType() {
