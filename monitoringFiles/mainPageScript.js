@@ -279,7 +279,7 @@ function displayCoinTransactionData(data, container) {
     const table = document.createElement('table');
     const tbody = document.createElement('tbody');
 
-    if (data && typeof data === 'object' && data.length >= 10) {
+    if (data && typeof data === 'object') {
         const keys = Object.keys(data).sort((a, b) => b - a);
         const latestKeys = keys.slice(-5).reverse();
 
@@ -293,7 +293,7 @@ function displayCoinTransactionData(data, container) {
             const valueCell = document.createElement('td');
             const value = data[key];
 
-            if (typeof value === 'object') {
+            if (typeof value === 'object' && key.length >= 10) {
                 displayTransactionData(value, valueCell);
             } else {
                 valueCell.textContent = value;
