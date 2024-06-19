@@ -1,1 +1,326 @@
-const _0x3507a9=_0x2ad0;function _0x2ad0(_0x258168,_0x385307){const _0x444ae4=_0x444a();return _0x2ad0=function(_0x2ad030,_0x2919db){_0x2ad030=_0x2ad030-0x1eb;let _0xbe05fb=_0x444ae4[_0x2ad030];return _0xbe05fb;},_0x2ad0(_0x258168,_0x385307);}(function(_0x1c3964,_0x401868){const _0x45c0e1=_0x2ad0,_0x12dfee=_0x1c3964();while(!![]){try{const _0x183470=parseInt(_0x45c0e1(0x21b))/0x1*(parseInt(_0x45c0e1(0x210))/0x2)+parseInt(_0x45c0e1(0x1f8))/0x3+-parseInt(_0x45c0e1(0x1f4))/0x4*(-parseInt(_0x45c0e1(0x204))/0x5)+-parseInt(_0x45c0e1(0x22a))/0x6+-parseInt(_0x45c0e1(0x224))/0x7*(parseInt(_0x45c0e1(0x203))/0x8)+parseInt(_0x45c0e1(0x206))/0x9+-parseInt(_0x45c0e1(0x228))/0xa;if(_0x183470===_0x401868)break;else _0x12dfee['push'](_0x12dfee['shift']());}catch(_0x38201b){_0x12dfee['push'](_0x12dfee['shift']());}}}(_0x444a,0xca891));import{initializeApp}from'https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js';import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from'https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js';import{getDatabase,ref,onValue}from'https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js';let userID;const firebaseConfig={'apiKey':_0x3507a9(0x1ec),'authDomain':_0x3507a9(0x1f9),'databaseURL':_0x3507a9(0x20c),'projectId':_0x3507a9(0x232),'storageBucket':'apsc-database.appspot.com','messagingSenderId':_0x3507a9(0x231),'appId':_0x3507a9(0x218)},firebaseApp=initializeApp(firebaseConfig),auth=getAuth(firebaseApp),database=getDatabase(firebaseApp);onAuthStateChanged(auth,_0x39c81b=>{const _0x5efb01=_0x3507a9,_0x59c389=document[_0x5efb01(0x1f0)]('authenticatedContent');_0x39c81b?(userID=_0x39c81b[_0x5efb01(0x201)],_0x59c389[_0x5efb01(0x1ee)][_0x5efb01(0x23a)]=_0x5efb01(0x1ed),welcomeTxt['textContent']=_0x5efb01(0x1fd)+_0x39c81b['email']+'!'):window[_0x5efb01(0x20a)]['href']='loginPage';});const toggleViewButton=document[_0x3507a9(0x1f0)](_0x3507a9(0x234)),displayTransactTypeBtn=document['getElementById']('displayTransactionType'),searchLink=document[_0x3507a9(0x1f0)](_0x3507a9(0x1f6)),searchPopup=document[_0x3507a9(0x1f0)](_0x3507a9(0x202)),rootNodeInput=document[_0x3507a9(0x1f0)](_0x3507a9(0x21f)),searchBtn=document[_0x3507a9(0x1f0)](_0x3507a9(0x220)),dataContainer=document['getElementById'](_0x3507a9(0x20f)),txtView=document[_0x3507a9(0x1f0)](_0x3507a9(0x209)),txtView1=document['getElementById']('textView1'),welcomeTxt=document[_0x3507a9(0x1f0)](_0x3507a9(0x211));let isTransactionHistoryView=![];window[_0x3507a9(0x22e)]=function(){const _0x21062d=_0x3507a9;if(rootNodeInput[_0x21062d(0x215)]['trim']()==''){alert(_0x21062d(0x22c)),dataContainer[_0x21062d(0x1ee)][_0x21062d(0x23a)]=_0x21062d(0x1eb),txtView1[_0x21062d(0x1ee)][_0x21062d(0x23a)]=_0x21062d(0x1eb);return;}else isTransactionHistoryView?(toggleViewButton[_0x21062d(0x238)]=_0x21062d(0x20b),txtView[_0x21062d(0x238)]=_0x21062d(0x205),viewData(),searchLink['style'][_0x21062d(0x23a)]=_0x21062d(0x1ed),displayTransactTypeBtn['style'][_0x21062d(0x23a)]=_0x21062d(0x1ed),dataContainer[_0x21062d(0x1ee)][_0x21062d(0x23a)]=_0x21062d(0x1ed),console[_0x21062d(0x235)](_0x21062d(0x237))):(toggleViewButton['textContent']=_0x21062d(0x20d),txtView['textContent']=_0x21062d(0x200),viewData(),searchLink[_0x21062d(0x1ee)]['display']=_0x21062d(0x1eb),displayTransactTypeBtn[_0x21062d(0x1ee)][_0x21062d(0x23a)]=_0x21062d(0x1eb),txtView1[_0x21062d(0x1ee)][_0x21062d(0x23a)]='none',dataContainer['style'][_0x21062d(0x23a)]=_0x21062d(0x1ed),console[_0x21062d(0x235)](_0x21062d(0x1fc)));isTransactionHistoryView=!isTransactionHistoryView;};function viewData(){const _0x379606=_0x3507a9,_0x378b16=rootNodeInput['value'][_0x379606(0x226)]();if(!isTransactionHistoryView){const _0x5e3220=ref(database,_0x379606(0x1fa)+userID+'/'+_0x378b16+'/Machine\x20Information');onValue(_0x5e3220,_0x8cffe8=>{const _0x3b5714=_0x379606;toggleViewButton[_0x3b5714(0x238)]=_0x3b5714(0x20d),txtView[_0x3b5714(0x238)]=_0x3b5714(0x200),txtView1['style'][_0x3b5714(0x23a)]=_0x3b5714(0x1eb),displayTransactTypeBtn[_0x3b5714(0x1ee)]['display']=_0x3b5714(0x1eb),searchLink[_0x3b5714(0x1ee)][_0x3b5714(0x23a)]=_0x3b5714(0x1eb);const _0x9f30d=_0x8cffe8['val']();displayMachineData(_0x9f30d,dataContainer);}),console[_0x379606(0x235)](_0x378b16);}else{const _0x2cffb5=ref(database,'users/uid/'+userID+'/'+_0x378b16+_0x379606(0x213));onValue(_0x2cffb5,_0x4d0c4a=>{const _0x5cd8a7=_0x379606,_0x362559=_0x4d0c4a[_0x5cd8a7(0x21c)]();displayTransactionData(_0x362559,dataContainer);}),console[_0x379606(0x235)](_0x378b16);}};let isDisplayEwalletHistory=![];window[_0x3507a9(0x21d)]=function(){const _0x278c70=_0x3507a9;if(rootNodeInput[_0x278c70(0x215)][_0x278c70(0x226)]()==''){alert(_0x278c70(0x22c)),dataContainer['style'][_0x278c70(0x23a)]=_0x278c70(0x1eb),txtView1[_0x278c70(0x1ee)][_0x278c70(0x23a)]='none';return;}else isDisplayEwalletHistory?(displayTransactTypeBtn[_0x278c70(0x238)]=_0x278c70(0x221),txtView1[_0x278c70(0x1ee)][_0x278c70(0x23a)]=_0x278c70(0x1ed),dataContainer[_0x278c70(0x1ee)][_0x278c70(0x23a)]='block',txtView1[_0x278c70(0x238)]=_0x278c70(0x22d),viewTransactionHistoryType(),console[_0x278c70(0x235)](_0x278c70(0x230))):(displayTransactTypeBtn[_0x278c70(0x238)]='Display\x20E-Wallet',txtView1[_0x278c70(0x1ee)][_0x278c70(0x23a)]='block',dataContainer[_0x278c70(0x1ee)][_0x278c70(0x23a)]=_0x278c70(0x1ed),txtView1[_0x278c70(0x238)]='COIN\x20TRANSACTIONS',viewTransactionHistoryType(),console['log'](_0x278c70(0x1fe)));isDisplayEwalletHistory=!isDisplayEwalletHistory;};function viewTransactionHistoryType(){const _0x4366b6=_0x3507a9,_0xe6e570=rootNodeInput[_0x4366b6(0x215)][_0x4366b6(0x226)]();if(!isDisplayEwalletHistory){const _0x11e0d9=ref(database,_0x4366b6(0x1fa)+userID+'/'+_0xe6e570+_0x4366b6(0x1f7));onValue(_0x11e0d9,_0xee2da5=>{const _0x41069c=_0x4366b6,_0xf5cd19=_0xee2da5[_0x41069c(0x21c)]();displayTransactionData(_0xf5cd19,dataContainer);});}else{const _0x2d1056=ref(database,_0x4366b6(0x1fa)+userID+'/'+_0xe6e570+'/transactionHistory/eWallet');onValue(_0x2d1056,_0x199ca5=>{const _0x2e9898=_0x4366b6,_0x167985=_0x199ca5[_0x2e9898(0x21c)]();displayTransactionData(_0x167985,dataContainer);});}}function _0x444a(){const _0x2cb6b4=['val','toggleCoinEwalletHistory','keys','rootNodeInput','searchBtn','Display\x20Coins','addEventListener','table','28553IPzMZO','body','trim','close','25696630JTKYHf','slice','6125046qoLZJM','tbody','Please\x20enter\x20a\x20machineID!','EWALLET\x20TRANSACTIONS','toggleView','classList','Viewing\x20E-Wallet\x20History.','848325536482','apsc-database','Transaction\x20ID:\x20','toggleButton','log','error','Viewing\x20Transaction\x20History.','textContent','appendChild','display','none','AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8','block','style','reverse','getElementById','catch','target','transactionID','4BBinoy','Error:\x20Invalid\x20MachineID','searchIDLink','/transactionHistory/coins','901800dOVwjC','apsc-database.firebaseapp.com','users/uid/','contains','Viewing\x20Machine\x20Data.','Welcome,\x20','Viewing\x20Coins\x20History.','message','MACHINE\x20DATA','uid','searchPopup','8dfoLCO','7800610ZqJAUb','TRANSACTION\x20HISTORY','8685846JLOBZw','Logout\x20failed:\x20','click','textView','location','View\x20Machine\x20Data','https://apsc-database-default-rtdb.asia-southeast1.firebasedatabase.app/','View\x20Transaction\x20History','Invalid\x20transactionID!','dataContainer','5628FvYybq','welcomeTxt','Enter\x20transactionID\x20to\x20search.','/transactionHistory','/transactionHistory/eWallet/','value','object','createElement','1:848325536482:web:b5397662213154786c0cbb','then','sort','568OTjAWa'];_0x444a=function(){return _0x2cb6b4;};return _0x444a();};function searchTransactionHistory(){const _0xe9e1ed=_0x3507a9,_0x323fea=rootNodeInput[_0xe9e1ed(0x215)][_0xe9e1ed(0x226)](),_0x3fc378=document[_0xe9e1ed(0x1f0)](_0xe9e1ed(0x1f3))[_0xe9e1ed(0x215)]['trim'](),_0x8540c=ref(database,_0xe9e1ed(0x1fa)+userID+'/'+_0x323fea+_0xe9e1ed(0x214)+_0x3fc378);txtView1['textContent']=_0xe9e1ed(0x233)+_0x3fc378,_0x3fc378==''?alert(_0xe9e1ed(0x212)):onValue(_0x8540c,_0xf4dc2e=>{const _0x33d6ab=_0xe9e1ed,_0x7c3ee1=_0xf4dc2e[_0x33d6ab(0x21c)]();console['log'](_0x7c3ee1),_0x7c3ee1!=null?(displayMachineData(_0x7c3ee1,dataContainer),txtView1[_0x33d6ab(0x1ee)][_0x33d6ab(0x23a)]=_0x33d6ab(0x1ed)):(alert(_0x33d6ab(0x20e)),dataContainer[_0x33d6ab(0x238)]='INVALID\x20TRANSACTION\x20ID!',txtView1[_0x33d6ab(0x1ee)][_0x33d6ab(0x23a)]=_0x33d6ab(0x1eb));});};searchLink[_0x3507a9(0x222)](_0x3507a9(0x208),function(){const _0x1421b5=_0x3507a9;rootNodeInput[_0x1421b5(0x215)][_0x1421b5(0x226)]()==''?(alert('Please\x20enter\x20a\x20MachineID\x20first!'),dataContainer[_0x1421b5(0x1ee)][_0x1421b5(0x23a)]='none',txtView1[_0x1421b5(0x1ee)][_0x1421b5(0x23a)]=_0x1421b5(0x1eb)):searchPopup['style'][_0x1421b5(0x23a)]='block';});function closesearchPopup(){searchPopup['style']['display']='none';}document[_0x3507a9(0x225)][_0x3507a9(0x222)](_0x3507a9(0x208),function(_0x1b978b){const _0x5990d8=_0x3507a9;_0x1b978b[_0x5990d8(0x1f2)][_0x5990d8(0x22f)][_0x5990d8(0x1fb)](_0x5990d8(0x227))&&closesearchPopup();}),window[_0x3507a9(0x222)](_0x3507a9(0x208),function(_0x321f50){_0x321f50['target']==searchPopup&&closesearchPopup();}),searchBtn[_0x3507a9(0x222)]('click',function(){const _0x4453fe=_0x3507a9;searchTransactionHistory(),dataContainer[_0x4453fe(0x1ee)]['display']=_0x4453fe(0x1ed),closesearchPopup();});function displayMachineData(_0x1dfea7,_0x10787a){const _0x37ec8c=_0x3507a9,_0xcbff65=document['createElement'](_0x37ec8c(0x223)),_0x56f5f3=document[_0x37ec8c(0x217)](_0x37ec8c(0x22b));if(_0x1dfea7&&typeof _0x1dfea7==='object'){for(const _0x434264 in _0x1dfea7){const _0x4c0a6a=document[_0x37ec8c(0x217)]('tr'),_0x3abda8=document[_0x37ec8c(0x217)]('td');_0x3abda8[_0x37ec8c(0x238)]=_0x434264,_0x4c0a6a[_0x37ec8c(0x239)](_0x3abda8);const _0x27ca3e=document[_0x37ec8c(0x217)]('td');typeof _0x1dfea7[_0x434264]===_0x37ec8c(0x216)?displayMachineData(_0x1dfea7[_0x434264],_0x27ca3e):_0x27ca3e[_0x37ec8c(0x238)]=_0x1dfea7[_0x434264],_0x4c0a6a[_0x37ec8c(0x239)](_0x27ca3e),_0x56f5f3[_0x37ec8c(0x239)](_0x4c0a6a);}_0xcbff65[_0x37ec8c(0x239)](_0x56f5f3),_0x10787a['innerHTML']='',_0x10787a[_0x37ec8c(0x239)](_0xcbff65);}else{const _0x1fe904=document['createElement']('tr'),_0x2fcbbb=document[_0x37ec8c(0x217)]('td');_0x2fcbbb[_0x37ec8c(0x238)]=_0x37ec8c(0x1f5),_0x1fe904[_0x37ec8c(0x239)](_0x2fcbbb),_0x56f5f3[_0x37ec8c(0x239)](_0x1fe904);}}function displayTransactionData(_0x548921,_0x359969){const _0x2afcdc=_0x3507a9,_0x2608e7=document[_0x2afcdc(0x217)](_0x2afcdc(0x223)),_0x45e2bc=document[_0x2afcdc(0x217)](_0x2afcdc(0x22b));if(_0x548921&&typeof _0x548921==='object'){const _0x18bdd8=Object[_0x2afcdc(0x21e)](_0x548921)[_0x2afcdc(0x21a)]((_0x1b2e5d,_0x3f7f6f)=>_0x3f7f6f-_0x1b2e5d),_0x16cd9f=_0x18bdd8[_0x2afcdc(0x229)](-0x5)[_0x2afcdc(0x1ef)]();for(const _0x5035f2 of _0x16cd9f){const _0x3ab9f3=document[_0x2afcdc(0x217)]('tr'),_0xbf286b=document[_0x2afcdc(0x217)]('td');_0xbf286b[_0x2afcdc(0x238)]=_0x5035f2,_0x3ab9f3[_0x2afcdc(0x239)](_0xbf286b);const _0x15ac30=document[_0x2afcdc(0x217)]('td'),_0x1bcd11=_0x548921[_0x5035f2];typeof _0x1bcd11===_0x2afcdc(0x216)?displayTransactionData(_0x1bcd11,_0x15ac30):_0x15ac30[_0x2afcdc(0x238)]=_0x1bcd11,_0x3ab9f3[_0x2afcdc(0x239)](_0x15ac30),_0x45e2bc['appendChild'](_0x3ab9f3);}}else{const _0x2a6220=document[_0x2afcdc(0x217)]('tr'),_0x1775d4=document[_0x2afcdc(0x217)]('td');_0x1775d4[_0x2afcdc(0x238)]='Error:\x20Invalid\x20MachineID',_0x2a6220[_0x2afcdc(0x239)](_0x1775d4),_0x45e2bc[_0x2afcdc(0x239)](_0x2a6220);}_0x2608e7['appendChild'](_0x45e2bc),_0x359969['innerHTML']='',_0x359969[_0x2afcdc(0x239)](_0x2608e7);}window['logout']=function(){const _0x4124f9=_0x3507a9;signOut(auth)[_0x4124f9(0x219)](()=>{})[_0x4124f9(0x1f1)](_0x564314=>{const _0x2a737e=_0x4124f9;console[_0x2a737e(0x236)](_0x2a737e(0x207)+_0x564314[_0x2a737e(0x1ff)]);});};
+// Imports
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js';
+import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js';
+
+let userID;
+
+// Firebase SDK
+const firebaseConfig = {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: "apsc-database.firebaseapp.com",
+    databaseURL: process.env.FIREBASE_APP_DATABASE_URL,
+    projectId: "apsc-database",
+    storageBucket: "apsc-database.appspot.com",
+    messagingSenderId: "848325536482",
+    appId: process.env.FIREBASE_APP_ID
+};
+// Firebase initialization
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const database = getDatabase(firebaseApp);
+
+onAuthStateChanged(auth, (user) => {
+    const authenticatedContent = document.getElementById('authenticatedContent');
+    if (user) {
+        userID = user.uid;
+        authenticatedContent.style.display = 'block';
+        welcomeTxt.textContent = `Welcome, ${user.email}!`;
+    } else {
+        window.location.href = "loginPage";
+    }
+});
+
+// HTML elements
+const toggleViewButton = document.getElementById('toggleButton');
+const displayTransactTypeBtn = document.getElementById("displayTransactionType");
+const searchLink = document.getElementById("searchIDLink");
+const searchPopup = document.getElementById("searchPopup");
+const rootNodeInput = document.getElementById('rootNodeInput');
+const searchBtn = document.getElementById("searchBtn");
+const dataContainer = document.getElementById('dataContainer');
+const txtView = document.getElementById('textView');
+const txtView1 = document.getElementById('textView1');
+const welcomeTxt = document.getElementById('welcomeTxt');
+
+// Toggle view functionality for machineData and transactionHistory.
+let isTransactionHistoryView = false;
+window.toggleView = function() {
+    if (rootNodeInput.value.trim() == "") {
+        alert("Please enter a machineID!");
+        dataContainer.style.display = "none";
+        txtView1.style.display = "none";
+        return;
+    }
+    else if (isTransactionHistoryView) { // 2nd to display on the 2nd toggleViewButton click.
+        toggleViewButton.textContent = 'View Machine Data';
+        txtView.textContent = 'TRANSACTION HISTORY';
+        viewData();
+        searchLink.style.display = "block";
+        displayTransactTypeBtn.style.display = "block";
+        dataContainer.style.display = "block";
+        console.log("Viewing Transaction History.");
+    }
+    else { // 1st to display on the initial toggleViewButton click.
+        toggleViewButton.textContent = 'View Transaction History';
+        txtView.textContent = 'MACHINE DATA';
+        viewData();
+        searchLink.style.display = "none";
+        displayTransactTypeBtn.style.display = "none";
+        txtView1.style.display = "none";
+        dataContainer.style.display = "block";
+        console.log("Viewing Machine Data.");
+    }
+    isTransactionHistoryView = !isTransactionHistoryView;
+};
+
+function viewData() {
+    const rootNode = rootNodeInput.value.trim();
+    if(!isTransactionHistoryView) {
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/Machine Information`);
+        onValue(databaseRef, (snapshot) => {
+            toggleViewButton.textContent = "View Transaction History"
+            txtView.textContent = "MACHINE DATA";
+            txtView1.style.display = "none";
+            displayTransactTypeBtn.style.display = "none";
+            searchLink.style.display = "none";
+            const data = snapshot.val();
+            displayMachineData(data, dataContainer);
+        });
+        console.log(rootNode);
+    }
+    else {
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory`);
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            displayTransactionData(data, dataContainer);
+        });
+        console.log(rootNode);
+    }
+};
+
+// Toggle view functionality for coins and eWallet.
+let isDisplayEwalletHistory = false;
+window.toggleCoinEwalletHistory = function() {
+    if (rootNodeInput.value.trim() == "") {
+        alert("Please enter a machineID!");
+        dataContainer.style.display = "none";
+        txtView1.style.display = "none";
+        return;
+    }
+    else if (isDisplayEwalletHistory) {
+        displayTransactTypeBtn.textContent = 'Display Coins';
+        txtView1.style.display = "block";
+        dataContainer.style.display = "block";
+        txtView1.textContent = "EWALLET TRANSACTIONS";
+        viewTransactionHistoryType();
+        console.log("Viewing E-Wallet History.");
+    }
+    else {
+        displayTransactTypeBtn.textContent = 'Display E-Wallet';
+        txtView1.style.display = "block";
+        dataContainer.style.display = "block";
+        txtView1.textContent = "COIN TRANSACTIONS";
+        viewTransactionHistoryType();
+        console.log("Viewing Coins History.");
+    }
+    isDisplayEwalletHistory = !isDisplayEwalletHistory;
+};
+
+function viewTransactionHistoryType() {
+    const rootNode = rootNodeInput.value.trim();
+    if(!isDisplayEwalletHistory) {
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/coins`);
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            displayCoinTransactionData(data, dataContainer);
+        });
+    }
+    else {
+        const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/eWallet`);
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            displayTransactionData(data, dataContainer);
+        });
+    }
+};
+
+// Search transactionID from database functionality
+function searchTransactionHistory() { 
+    const rootNode = rootNodeInput.value.trim();
+    const transactionID = document.getElementById('transactionID').value.trim();
+    const databaseRef = ref(database, `users/uid/${userID}/${rootNode}/transactionHistory/eWallet/${transactionID}`);
+    txtView1.textContent = `Transaction ID: ${transactionID}`;
+    
+    if(transactionID == "") {
+        alert('Enter transactionID to search.');
+    }
+    else {
+        onValue(databaseRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+            if(data != null) {
+                displayMachineData(data, dataContainer);
+                txtView1.style.display = "block";
+            }
+            else {
+                alert("Invalid transactionID!");
+                dataContainer.textContent = "INVALID TRANSACTION ID!";
+                txtView1.style.display = "none";
+            }
+        });
+    }
+};
+
+// Search transactionID link functionality
+searchLink.addEventListener("click", function () {
+    if(rootNodeInput.value.trim() == "") {
+        alert('Please enter a MachineID first!');
+        dataContainer.style.display = "none";
+        txtView1.style.display = "none";
+    }
+    else {
+        searchPopup.style.display = "block";
+    }
+});
+// search transactionID popUp
+function closesearchPopup() {
+    searchPopup.style.display = "none";
+}
+// For close toggleViewButton in search popup
+document.body.addEventListener('click', function(event) {
+    if (event.target.classList.contains('close')) {
+        closesearchPopup();
+    }
+});
+window.addEventListener("click", function (event) {
+    if (event.target == searchPopup) {
+        closesearchPopup();
+    }
+});
+searchBtn.addEventListener("click", function () {
+    searchTransactionHistory();
+    dataContainer.style.display = "block";
+    closesearchPopup();
+});
+
+function displayMachineData(data, container) {
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+
+    if(data && typeof data === 'object') {
+        for (const key in data) {
+            const row = document.createElement('tr');
+            const keyCell = document.createElement('td');
+            keyCell.textContent = key;
+            row.appendChild(keyCell);
+
+            const valueCell = document.createElement('td');
+            if (typeof data[key] === 'object') {
+                displayMachineData(data[key], valueCell);
+            } else {
+                valueCell.textContent = data[key];
+            }
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
+        }
+        table.appendChild(tbody);
+        container.innerHTML = '';
+        container.appendChild(table);
+    }
+    else {
+        const row = document.createElement('tr');
+        const errorCell = document.createElement('td');
+        errorCell.textContent = 'Error: Invalid MachineID';
+        row.appendChild(errorCell);
+        tbody.appendChild(row);
+    }
+}
+
+function displayTransactionData(data, container) {
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+
+    if (data && typeof data === 'object') {
+        const keys = Object.keys(data).sort((a, b) => b - a);
+        const latestKeys = keys.slice(-5).reverse();
+
+        for (const key of latestKeys) {
+            const row = document.createElement('tr');
+            const keyCell = document.createElement('td');
+            keyCell.textContent = key;
+            row.appendChild(keyCell);
+
+            const valueCell = document.createElement('td');
+            const value = data[key];
+
+            if (typeof value === 'object') {
+                displayTransactionData(value, valueCell);
+            } else {
+                valueCell.textContent = value;
+            }
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
+        }
+    }
+    else {
+        const row = document.createElement('tr');
+        const errorCell = document.createElement('td');
+        errorCell.textContent = 'Error: Invalid MachineID';
+        row.appendChild(errorCell);
+        tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+    container.innerHTML = '';
+    container.appendChild(table);
+}
+
+function displayCoinTransactionData(data, container) {
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+
+    if (data && typeof data === 'object') {
+        const keys = Object.keys(data).sort((a, b) => b - a);
+        const latestKeys = keys.slice(-5).reverse();
+
+        for (const key of latestKeys) {
+            if (key.length >= 10) {
+                const row = document.createElement('tr');
+                const keyCell = document.createElement('td');
+                keyCell.textContent = key;
+                row.appendChild(keyCell);
+
+                const valueCell = document.createElement('td');
+                const value = data[key];
+            }
+
+            if (typeof value === 'object') {
+                displayTransactionData(value, valueCell);
+            } else {
+                valueCell.textContent = value;
+            }
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
+        }
+    }
+    else {
+        const row = document.createElement('tr');
+        const errorCell = document.createElement('td');
+        errorCell.textContent = 'Error: Invalid MachineID';
+        row.appendChild(errorCell);
+        tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+    container.innerHTML = '';
+    container.appendChild(table);
+}
+
+window.logout = function() {
+    signOut(auth)
+        .then(() => {
+            // Sign-out successful.
+        })
+        .catch((error) => {
+            console.error(`Logout failed: ${error.message}`);
+        });
+};
