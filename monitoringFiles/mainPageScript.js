@@ -289,10 +289,9 @@ function displayCoinTransactionData(data, container) {
                 const keyCell = document.createElement('td');
                 keyCell.textContent = key;
                 row.appendChild(keyCell);
-
-                const valueCell = document.createElement('td');
-                const value = data[key];
             }
+            const valueCell = document.createElement('td');
+            const value = data[key];
 
             if (typeof value === 'object') {
                 displayTransactionData(value, valueCell);
