@@ -101,8 +101,9 @@ function viewData() {
 
 // Toggle view functionality for coins and eWallet.
 let isDisplayEwalletHistory = false;
-/*window.toggleCoinEwalletHistory = function() {
-    if (rootNodeInput.value.trim() == "") {
+window.toggleCoinEwalletHistory = function() {
+    viewTransactionHistoryType();
+    /*if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
         dataContainer.style.display = "none";
         txtView1.style.display = "none";
@@ -124,8 +125,8 @@ let isDisplayEwalletHistory = false;
         viewTransactionHistoryType();
         console.log("Viewing Coins History.");
     }
-    isDisplayEwalletHistory = !isDisplayEwalletHistory;
-};*/
+    isDisplayEwalletHistory = !isDisplayEwalletHistory;*/
+};
 
 function viewTransactionHistoryType() {
     const rootNode = rootNodeInput.value.trim();
