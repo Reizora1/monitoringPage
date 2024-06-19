@@ -7,13 +7,13 @@ let userID;
 
 // Firebase SDK
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
+    apiKey: "AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8",
     authDomain: "apsc-database.firebaseapp.com",
-    databaseURL: process.env.FIREBASE_APP_DATABASE_URL,
+    databaseURL: "https://apsc-database-default-rtdb.asia-southeast1.firebasedatabase.app/",
     projectId: "apsc-database",
     storageBucket: "apsc-database.appspot.com",
     messagingSenderId: "848325536482",
-    appId: process.env.FIREBASE_APP_ID
+    appId: "1:848325536482:web:b5397662213154786c0cbb"
 };
 // Firebase initialization
 const firebaseApp = initializeApp(firebaseConfig);
