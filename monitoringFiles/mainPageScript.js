@@ -284,9 +284,9 @@ function displayCoinTransactionData(data, container) {
         const latestKeys = keys.slice(-5).reverse();
 
         for (const key of latestKeys) {
+            const row = document.createElement('tr');
+            const keyCell = document.createElement('td');
             if (key.length >= 10) {
-                const row = document.createElement('tr');
-                const keyCell = document.createElement('td');
                 keyCell.textContent = key;
                 row.appendChild(keyCell);
             }
