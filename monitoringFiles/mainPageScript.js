@@ -100,7 +100,7 @@ function viewData() {
 };
 
 // Toggle view functionality for coins and eWallet.
-let isDisplayEwalletHistory = false;
+let isDisplayEwalletHistory = true;
 window.toggleCoinEwalletHistory = function() {
     if (rootNodeInput.value.trim() == "") {
         alert("Please enter a machineID!");
