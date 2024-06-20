@@ -4,9 +4,9 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from
 import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js';
 
 let userID;
-const firebaseApiKey = render.env.FIREBASE_API_KEY;
-const databaseUrl = render.env.FIREBASE_APP_DATABASE_URL;
-const firebaseAppId = render.env.FIREBASE_APP_ID;
+const firebaseApiKey = FIREBASE_API_KEY;
+const databaseUrl = FIREBASE_APP_DATABASE_URL;
+const firebaseAppId = FIREBASE_APP_ID;
 
 // Firebase SDK
 const firebaseConfig = {
