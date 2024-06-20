@@ -4,19 +4,16 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from
 import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js';
 
 let userID;
-const firebaseApiKey = FIREBASE_API_KEY;
-const databaseUrl = FIREBASE_APP_DATABASE_URL;
-const firebaseAppId = FIREBASE_APP_ID;
 
 // Firebase SDK
 const firebaseConfig = {
-    apiKey: firebaseApiKey,
+    apiKey: "AIzaSyDxeU-bMAf-O0HYhz6X8yhsNPpqe19ld_8",
     authDomain: "apsc-database.firebaseapp.com",
-    databaseURL: databaseUrl,
+    databaseURL: "https://apsc-database-default-rtdb.asia-southeast1.firebasedatabase.app/",
     projectId: "apsc-database",
     storageBucket: "apsc-database.appspot.com",
     messagingSenderId: "848325536482",
-    appId: firebaseAppId
+    appId: "1:848325536482:web:b5397662213154786c0cbb"
 };
 // Firebase initialization
 const firebaseApp = initializeApp(firebaseConfig);
