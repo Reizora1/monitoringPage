@@ -13,7 +13,7 @@ const firebaseConfig = {
     projectId: "apsc-database",
     storageBucket: "apsc-database.appspot.com",
     messagingSenderId: "848325536482",
-    appId: proecss.env.FIREBASE_APP_DATABASE_URL
+    appId: process.env.FIREBASE_APP_ID
 };
 // Firebase initialization
 const firebaseApp = initializeApp(firebaseConfig);
